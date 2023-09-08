@@ -38,3 +38,10 @@ class Test(View):
     def get(self, request):
         return HttpResponse("Hello there, from generic class view!!!")
 
+
+
+class Welcome(View):
+    # Como función el método(GET,PATCH,POST.DELETE,PUT)
+    def get(self, request):
+        return HttpResponse("<div style='text-align:center;'><h1>Welcome to Vet App!!!</h1><div>")
+
