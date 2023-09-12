@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Pet Owner</title>
+{% endblock title %}
+
+{% block header %}
+<h1>Pet owner detail</h1>
+{% endblock header %}
+
+<!--the context is -> 'owner'-->
+{% block content %}
+<p>I: {{ owner.id }}</p>
+<p>First Name: {{ owner.first_name }}</p>
+<p>Last Name: {{ owner.last_name }}</p>
+<p>Email: {{ owner.email }}</p>
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Pets</title>
+{% endblock title %}
+
+{% block header %}
+<h1>Pets list</h1>
+{% endblock header %}
+
+{% block content %}
+{% if pets %}
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Owner</th>
+  </tr>
+    {% for pet in pets %}
+    <tr>
+      <td>{{ pet.id }}</td>
+      <td>{{ pet.name }}</td>
+      <td>{{ pet.type }}</td>
+      <td>{{ pet.owner }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else  %}
+  <h1>DATA NOT FOUND</h1>
+{% endif  %}
+{% endblock content %}

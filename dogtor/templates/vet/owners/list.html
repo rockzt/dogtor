@@ -17,7 +17,9 @@
   </tr>
   {% for owner in owners %}
   <tr>
-    <td>{{ owner.id }}</td>
+    <!--attribute href - url where we want to go-->
+    <!--reversed_app_url:reversed_singular_url-->
+    <td>  <a href="{% url 'vet:owners_detail' pk=owner.id %}">{{ owner.id }}</a> </td>
     <td>{{ owner.first_name }}</td>
     <td>{{ owner.email }}</td>
   </tr>

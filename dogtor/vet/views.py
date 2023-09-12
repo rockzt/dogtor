@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
-from django.views.generic import View, TemplateView  # Impoting TemplateView for generic class view
+from django.views.generic import View, TemplateView, ListView, DetailView  # Importing TemplateView for generic class view
 # Models
-from vet.models import PetOwner
+from vet.models import PetOwner, Pet
 
 
 # Create your views here.
@@ -20,6 +20,7 @@ def list_pet_owners(request):
     return HttpResponse(template.render(context, request))
 
 # Render template
+'''
 class OwnersList(TemplateView):
     # Rendering template
     template_name = "vet/owners/list.html"
@@ -31,6 +32,57 @@ class OwnersList(TemplateView):
         context["owners"] = PetOwner.objects.all()
         # Returning context
         return context
+'''
+
+class OwnersList(ListView):
+    # 1.- Use model we want to use.
+    # 2.- Pass template to render.
+    # 3.- Pass the context with the data we want to manipulate.
+    model = PetOwner # 1 Model
+    template_name = 'vet/owners/list.html' # 2 Template
+    context_object_name = "owners" # 3 Context
+
+class OwnerDetail(DetailView):
+    """Renders a specific Pet Owner with their pk"""
+    # 1. Modelo
+    # 2. Template to create
+    # 3. Context to use on the template
+    model = PetOwner
+    template_name = 'vet/owners/detail.html'
+    context_object_name = "owner"
+
+class PetsList(TemplateView):
+    # Rendering template
+    template_name = "vet/pets/list.html"
+
+    # Passing context, overwriting class to pass context
+    def get_context_data(self, **kwargs):
+        # Catching inherited context by TemplateView class
+        context = super().get_context_data(**kwargs)
+        # Adding our custom context, retrieving data from our DB
+        try:
+            context["pets"] = Pet.objects.all()
+        except Pet.DoesNotExist:
+            context["pets"] = []
+        # Returning context
+        return context
+
+class PetDetail(TemplateView):
+    # Rendering template
+    template_name = "vet/pets/detail.html"
+
+    # Passing context, overwriting class to pass context
+    def get_context_data(self, **kwargs):
+        # Catching inherited context by TemplateView class
+        context = super().get_context_data(**kwargs)
+        # Adding our custom context, retrieving data from our DB
+        try:
+            context["pet"] = Pet.objects.get(pk=self.kwargs['pk'])
+        except Pet.DoesNotExist:
+            context["pet"] = ""
+        # Returning context
+        return context
+
 
 # Render text
 class Test(View):
