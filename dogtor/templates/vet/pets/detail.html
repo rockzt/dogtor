@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Pet Details</title>
+{% endblock title %}
+
+{% block header %}
+<h1>Pet Details</h1>
+{% endblock header %}
+
+<!--the context is -> 'owner'-->
+
+{% block content %}
+    {% if pet %}
+    <p>ID: {{ pet.id }}</p>
+    <p>Name: {{ pet.name }}</p>
+    <p>Type: {{ pet.type }}</p>
+    <p>Owner: {{ pet.owner.first_name }}</p>
+    {% else  %}
+    <h1>DATA NOT FOUND</h1>
+    {% endif  %}
+{% endblock content %}
