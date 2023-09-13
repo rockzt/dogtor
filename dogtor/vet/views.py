@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
 from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView  # Importing TemplateView for generic class view
-from .forms import OwnerForm # Importing forms that will be used on views
+from .forms import OwnerForm, PetForm# Importing forms that will be used on views
 from django.urls import reverse_lazy  # Importing to use reversed urls
 # Models
 from vet.models import PetOwner, Pet
@@ -121,6 +121,25 @@ class OwnersUpdate(UpdateView):
     form_class = OwnerForm # If you want to update specific fields, you can create another form  in forms.py with specific fields
 
     success_url = reverse_lazy('vet:owners_list')  # 4
+
+
+class PetsCreate(CreateView):
+    """View used to create Pet"""
+
+    model = Pet # 1
+    template_name = "vet/pets/create.html" # 2
+    form_class = PetForm # 3
+    success_url = reverse_lazy('vet:pets_list') # 4
+
+
+class PetsUpdate(UpdateView):
+    """View used to update a PetOwner"""
+    model = Pet
+    template_name =  "vet/pets/update.html"
+    form_class = PetForm # If you want to update specific fields, you can create another form  in forms.py with specific fields
+
+    success_url = reverse_lazy('vet:pets_list')  # 4
+
 
 # Render text
 class Test(View):
