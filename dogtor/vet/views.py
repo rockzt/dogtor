@@ -42,7 +42,7 @@ class OwnersList(ListView):
     template_name = 'vet/owners/list.html' # 2 Template
     context_object_name = "owners" # 3 Context
 
-class OwnerDetail(DetailView):
+class OwnersDetail(DetailView):
     """Renders a specific Pet Owner with their pk"""
     # 1. Modelo
     # 2. Template to create
@@ -51,6 +51,24 @@ class OwnerDetail(DetailView):
     template_name = 'vet/owners/detail.html'
     context_object_name = "owner"
 
+class PetsList(ListView):
+    # Rendering template
+
+    model = Pet  # 1 Model
+    print(model)
+    template_name = "vet/pets/list.html"  # 2 Template
+    context_object_name = "pets"  # 3 Context
+
+class PetDetail(DetailView):
+    # Rendering template
+
+    model = Pet
+    print(model)
+    template_name = "vet/pets/detail.html"
+    context_object_name = "pet"
+
+'''
+      USING TEMPLATE VIEW
 class PetsList(TemplateView):
     # Rendering template
     template_name = "vet/pets/list.html"
@@ -82,7 +100,7 @@ class PetDetail(TemplateView):
             context["pet"] = ""
         # Returning context
         return context
-
+'''
 
 # Render text
 class Test(View):
