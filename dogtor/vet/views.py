@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
-from django.views.generic import View, TemplateView, ListView, DetailView  # Importing TemplateView for generic class view
+from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView  # Importing TemplateView for generic class view
+from .forms import OwnerForm # Importing forms that will be used on views
+from django.urls import reverse_lazy  # Importing to use reversed urls
 # Models
 from vet.models import PetOwner, Pet
 
@@ -55,7 +57,6 @@ class PetsList(ListView):
     # Rendering template
 
     model = Pet  # 1 Model
-    print(model)
     template_name = "vet/pets/list.html"  # 2 Template
     context_object_name = "pets"  # 3 Context
 
@@ -63,7 +64,6 @@ class PetDetail(DetailView):
     # Rendering template
 
     model = Pet
-    print(model)
     template_name = "vet/pets/detail.html"
     context_object_name = "pet"
 
@@ -101,6 +101,26 @@ class PetDetail(TemplateView):
         # Returning context
         return context
 '''
+class OwnersCreate(CreateView):
+    """View used to create PetOwner"""
+    # 1.- Model
+    # 2.- Template to render
+    # 3.- Form it's going to be created with
+    # 4.- The url if the request was successful and will be redirected to this-> reversed url
+
+    model = PetOwner # 1
+    template_name = "vet/owners/create.html" # 2
+    form_class = OwnerForm # 3
+    success_url = reverse_lazy('vet:owners_list') # 4
+
+
+class OwnersUpdate(UpdateView):
+    """View used to update a PetOwner"""
+    model = PetOwner
+    template_name =  "vet/owners/update.html"
+    form_class = OwnerForm # If you want to update specific fields, you can create another form  in forms.py with specific fields
+
+    success_url = reverse_lazy('vet:owners_list')  # 4
 
 # Render text
 class Test(View):

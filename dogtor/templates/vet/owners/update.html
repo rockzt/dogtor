@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Pet Owner</title>
+{% endblock title %}
+
+{% block header %}
+<h1>Edit Pet Owner </h1>
+{% endblock header %}
+
+<!--the context is -> 'owner'-->
+{% block content %}
+<form method ="POST">
+    {% csrf_token %}
+    {{ form }}  <!--loading form-->
+    <button type="submit">Update</button>
+</form>
+{% endblock content %}
