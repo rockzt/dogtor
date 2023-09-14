@@ -1,7 +1,15 @@
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
-from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView  # Importing TemplateView for generic class view
+from django.contrib.auth.mixins import PermissionRequiredMixin  # Importing permissions for views
+from django.views.generic import (View,
+                                  TemplateView,
+                                  ListView,
+                                  DetailView,
+                                  CreateView,
+                                  UpdateView,
+                                  DeleteView
+                                  ) # Importing TemplateView for generic class view
 from .forms import OwnerForm, PetForm# Importing forms that will be used on views
 from django.urls import reverse_lazy  # Importing to use reversed urls
 # Models
@@ -117,8 +125,12 @@ class OwnersCreate(CreateView):
     success_url = reverse_lazy('vet:owners_list') # 4
 
 
-class OwnersUpdate(UpdateView):
+class OwnersUpdate(PermissionRequiredMixin ,UpdateView):
     """View used to update a PetOwner"""
+    # Permission required to access this view
+    permission_required = "vet.change_petowner" #app.how is it named on admin in the group section on permission assigned, just the user with this permission can access to this view
+    raise_exception = True  # Raise exception when you do not have permission
+
     model = PetOwner
     template_name =  "vet/owners/update.html"
     form_class = OwnerForm # If you want to update specific fields, you can create another form  in forms.py with specific fields
