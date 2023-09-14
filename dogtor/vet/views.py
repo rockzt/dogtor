@@ -1,11 +1,14 @@
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
-from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView  # Importing TemplateView for generic class view
+from django.views.generic import View, TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView  # Importing TemplateView for generic class view
 from .forms import OwnerForm, PetForm# Importing forms that will be used on views
 from django.urls import reverse_lazy  # Importing to use reversed urls
 # Models
 from vet.models import PetOwner, Pet
+# Handling Errors on Delete View
+from django.db.models import ProtectedError
+from django.shortcuts import render
 
 
 # Create your views here.
@@ -139,6 +142,24 @@ class PetsUpdate(UpdateView):
     form_class = PetForm # If you want to update specific fields, you can create another form  in forms.py with specific fields
 
     success_url = reverse_lazy('vet:pets_list')  # 4
+
+class OwnersDelete(DeleteView):
+    model = PetOwner
+    template_name = "vet/owners/delete.html"
+    success_url = reverse_lazy('vet:owners_list')
+
+    def post(self, request, *args, **kwargs):
+        try:
+            return super().delete(request, *args, **kwargs)
+        except ProtectedError as e:
+            # Customize the error message
+            error_message = f"This object cannot be deleted because it is associated with other objects. ({e})"
+            res = str(e).split(', ')
+            pet_pk_str = res[3].replace('>', '').replace('}', '').replace(')', '')
+            pk_user = kwargs['pk']
+            pet_pk = int(pet_pk_str)
+            owner_error = PetOwner.objects.get(pk=pk_user)
+            return render(request, 'vet/owners/delete.html', {'error_message': error_message, 'owner_error': owner_error, 'pet_pk' : pet_pk})
 
 
 # Render text
