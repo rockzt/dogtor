@@ -35,7 +35,7 @@ class Pet(models.Model):
     owner = models.ForeignKey(PetOwner, on_delete=models.PROTECT, related_name="pets")
 
     def __str__(self):
-        return f"{self.name}, {self.type}"
+        return f"{self.name}, {self.type}, {self.id}"
 
 
 

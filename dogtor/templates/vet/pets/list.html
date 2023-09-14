@@ -9,8 +9,12 @@
 {% endblock header %}
 
 {% block content %}
+<div style="text-align: center">
+  <button><a href="{% url 'vet:pets_create'%}">Create Pet</a></button>
+</div>
+<br>
 {% if pets %}
-<table>
+<table style="text-align: center;align-items: center;margin-left: auto;margin-right: auto;">
   <tr>
     <th>ID</th>
     <th>Name</th>

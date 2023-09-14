@@ -9,7 +9,12 @@
 {% endblock header %}
 
 {% block content %}
-<table>
+<div style="text-align: center">
+  <button><a href="{% url 'vet:owners_create'%}">Create Owner</a></button>
+</div>
+<br>
+<div style="align-items: center">
+<table style="text-align: center;align-items: center;margin-left: auto;margin-right: auto;">
   <tr>
     <th>ID</th>
     <th>First Name</th>
@@ -23,8 +28,9 @@
     <td>  <a href="{% url 'vet:owners_detail' pk=owner.id %}">{{ owner.id }}</a> </td>
     <td>{{ owner.first_name }}</td>
     <td>{{ owner.email }}</td>
-    <td><a href="{% url 'vet:owners_detail' pk=owner.id %}">View</a> | <a href="{% url 'vet:owners_edit' pk=owner.id %}">Modify</a> </td>
+    <td><a href="{% url 'vet:owners_detail' pk=owner.id %}">View</a> | <a href="{% url 'vet:owners_edit' pk=owner.id %}">Modify</a> | <a href="{% url 'vet:owners_delete' pk=owner.id %}">DELETE</a> </td>
   </tr>
   {% endfor %}
 </table>
+</div>
 {% endblock content %}

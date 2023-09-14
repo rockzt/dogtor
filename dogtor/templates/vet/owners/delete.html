@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Owner</title>
+{% endblock title %}
+
+{% block header %}
+<h1>Delete Owner</h1>
+{% endblock header %}
+
+<!--the context is -> 'owner'-->
+
+{% block content %}
+  {% if error_message %}
+    <h1>Can Not Delete Owner</h1>
+    <div style="text-align: center;">
+      <h3>Owner: </h3><p>{{ owner_error }}</p>
+      <h3>Error: </h3><p>{{ error_message }}</p>
+      {{ error }}
+      <h3>Recommendation: </h3> <p>Click here to edit pet´s owner -> <a href="{% url 'vet:pets_edit' pk=pet_pk %}">Edit Pet</a> </p>
+    </div>
+  {% else %}
+    <h2>Delete {{ object }}</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Confirm Delete">
+    </form>
+  {% endif %}
+<br>
+  <a href="{% url 'vet:owners_list' %}">Cancel</a>
+{% endblock content %}
