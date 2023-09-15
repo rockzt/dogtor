@@ -12,10 +12,26 @@
 
 {% block content %}
     {% if pet %}
-    <p>ID: {{ pet.id }}</p>
-    <p>Name: {{ pet.name }}</p>
-    <p>Type: {{ pet.type }}</p>
-    <p>Owner: {{ pet.owner.first_name }}</p>
+<div class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center">
+  <div class="col">
+    <div class="card h-100">
+      <img src="https://ouch-cdn2.icons8.com/eQzKOmjiFD6tlhqyNEpeF3kyBAwTnEYGpIB9-PZUVYc/rs:fit:456:456/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9wbmcvMzUx/LzUwMDFjNWIzLTFk/M2QtNDU3OC1hYjE4/LThjMDBlMTZmMGNj/Ni5wbmc.png" class="card-img-top"
+        alt="User_Image_Cartoon" />
+      <div class="card-body">
+        <h5 class="card-title">Name: {{ pet.name }}</h5>
+        <p class="card-text">
+            <b>Type:</b> {{ pet.type }}
+            <b>Owner:</b> {{ pet.owner.first_name }}
+        </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">ID: {{ pet.id }}</small>
+          <br>
+        <a type="button" class="btn btn-danger mt-2" href="{% url 'vet:pets_list' %}">Return</a>
+      </div>
+    </div>
+  </div>
+</div>
     {% else  %}
     <h1>DATA NOT FOUND</h1>
     {% endif  %}

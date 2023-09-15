@@ -10,9 +10,34 @@
 
 <!--the context is -> 'owner'-->
 {% block content %}
-<form method ="POST">
-    {% csrf_token %}
-    {{ form }}  <!--loading form-->
-    <button type="submit">Create</button>
-</form>
+<!--
+<div class="card-body">
+    <h5>Create New Owner</h5>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}  loading form
+        <a type="button" class="btn btn-danger" href="{% url 'vet:owners_list' %}">Cancel</a>
+        <button type="submit" class="btn btn-success">Create</button>
+    </form>
+</div>
+-->
+<div class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center">
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">Create New Owner</h5>
+        <p class="card-text">
+          <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}  <!--loading form-->
+            <button type="submit" class="btn btn-success">Create</button>
+          </form>
+        </p>
+      </div>
+      <div class="card-footer">
+        <a type="button" class="btn btn-danger" href="{% url 'vet:owners_list' %}">Cancel</a>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock content %}

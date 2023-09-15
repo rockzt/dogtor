@@ -8,23 +8,34 @@
   {% block title %}
   <title>Dogtor</title>
   {% endblock title %}
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+      <!--Chart js-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
 </head>
 
 <body>
-  <header>
-    {% block header %}
-    <h1>Dogs</h1>
-    {% endblock header %}
-  </header>
-  <div>
     <div>
       {% include "menu.html" %} <!--This template can not be modified by child´s templates, acts just like a piece of code, more like a section, not an entire html template-->
     </div>
-    <div>
+    <header class="text-center mt-3">
+      {% block header %}
+      <h1>Dogs</h1>
+      {% endblock header %}
+      <hr>
+    </header>
+  <div class="container-fluid">
+    <div class="row text-center d-flex justify-content-center">
       {% block content %}
       {% endblock content %}
     </div>
   </div>
+{% include "footer.html" %}
 </body>
-
+{% block scripts %}
+{% endblock scripts %}
+{% block style %}
+{% endblock style %}
 </html>

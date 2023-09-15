@@ -10,9 +10,19 @@
 
 <!--the context is -> 'owner'-->
 {% block content %}
-<form method ="POST">
+<!--<form method ="POST">
     {% csrf_token %}
-    {{ form }}  <!--loading form-->
+    {{ form }}
     <button type="submit">Update</button>
-</form>
+</form>-->
+
+<div class="card-body">
+    <h5>Update Owner</h5>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}  <!--loading form-->
+        <a type="button" class="btn btn-danger" href="{% url 'vet:owners_list' %}">Cancel</a>
+        <button type="submit" class="btn btn-success">Update</button>
+    </form>
+</div>
 {% endblock content %}
