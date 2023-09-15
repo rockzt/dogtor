@@ -10,8 +10,28 @@
 
 <!--the context is -> 'owner'-->
 {% block content %}
-<p>I: {{ owner.id }}</p>
-<p>First Name: {{ owner.first_name }}</p>
-<p>Last Name: {{ owner.last_name }}</p>
-<p>Email: {{ owner.email }}</p>
+  {% if owner %}
+
+<div class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center">
+  <div class="col">
+    <div class="card h-100">
+      <img src="https://ouch-cdn2.icons8.com/2odhbIs38twM3CC3y8ZdY4B9hX-bNtLzSkRBPczkBmY/rs:fit:368:368/czM6Ly9pY29uczgu/b3VjaC1wcm9kLmFz/c2V0cy9zdmcvMjIv/ZTM4NjFlNGYtMDk0/Yy00YzNkLThiN2Et/NjBlMzI1MjMwMWYw/LnN2Zw.png" class="card-img-top"
+        alt="User_Image_Cartoon" />
+      <div class="card-body">
+        <h5 class="card-title">Full Name: {{ owner.first_name }} {{ owner.last_name }}</h5>
+        <p class="card-text">
+          Email: {{ owner.email }}
+        </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">ID: {{ owner.id }}</small>
+        <br>
+        <a type="button" class="btn btn-danger mt-2" href="{% url 'vet:owners_list' %}">Return</a>
+      </div>
+    </div>
+  </div>
+</div>
+    {% else  %}
+    <h1>DATA NOT FOUND</h1>
+    {% endif  %}
 {% endblock content %}

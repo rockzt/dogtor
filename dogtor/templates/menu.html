@@ -1,19 +1,27 @@
-<nav>
-  <ul>
-    <li>
-      <a href="/vet">
-        Home
-      </a>
-    </li>
-    <li>
-      <a href="/vet/owners">
-        Owners
-      </a>
-    </li>
-    <li>
-      <a href="/vet/pets">
-        Pets
-      </a>
-    </li>
-  </ul>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Dogtor</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/vet">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/vet/owners">Owners</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/vet/pets">Pets</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/vet/appointments">Appointments</a>
+          </li>
+      </ul>
+      <form class="d-flex">
+        <button class="btn btn-outline-success" type="submit">Login</button>
+      </form>
+    </div>
+  </div>
 </nav>

@@ -13,7 +13,7 @@ from django.views.generic import (View,
 from .forms import OwnerForm, PetForm# Importing forms that will be used on views
 from django.urls import reverse_lazy  # Importing to use reversed urls
 # Models
-from vet.models import PetOwner, Pet
+from vet.models import PetOwner, Pet, PetDate
 # Handling Errors on Delete View
 from django.db.models import ProtectedError
 from django.shortcuts import render
@@ -54,6 +54,7 @@ class OwnersList(ListView):
     model = PetOwner # 1 Model
     template_name = 'vet/owners/list.html' # 2 Template
     context_object_name = "owners" # 3 Context
+    paginate_by = 2  # Pagination parameter, how many records you want to show per page -> 1
 
 class OwnersDetail(DetailView):
     """Renders a specific Pet Owner with their pk"""
@@ -70,6 +71,7 @@ class PetsList(ListView):
     model = Pet  # 1 Model
     template_name = "vet/pets/list.html"  # 2 Template
     context_object_name = "pets"  # 3 Context
+    paginate_by = 3  # Pagination parameter, how many records you want to show per page -> 1
 
 class PetDetail(DetailView):
     # Rendering template
@@ -165,13 +167,32 @@ class OwnersDelete(DeleteView):
             return super().delete(request, *args, **kwargs)
         except ProtectedError as e:
             # Customize the error message
-            error_message = f"This object cannot be deleted because it is associated with other objects. ({e})"
+            error_message = f"Cannot delete owner, has at least one pet related. ({e})"
             res = str(e).split(', ')
             pet_pk_str = res[3].replace('>', '').replace('}', '').replace(')', '')
             pk_user = kwargs['pk']
             pet_pk = int(pet_pk_str)
             owner_error = PetOwner.objects.get(pk=pk_user)
             return render(request, 'vet/owners/delete.html', {'error_message': error_message, 'owner_error': owner_error, 'pet_pk' : pet_pk})
+
+
+class PetsDelete(DeleteView):
+    model = Pet
+    template_name = "vet/pets/delete.html"
+    success_url = reverse_lazy('vet:pets_list')
+
+    def post(self, request, *args, **kwargs):
+        try:
+            return super().delete(request, *args, **kwargs)
+        except ProtectedError as e:
+            # Customize the error message
+            error_message = f"Cannot delete pet -> ({e})"
+            # res = str(e).split(', ')
+            # pet_pk_str = res[3].replace('>', '').replace('}', '').replace(')', '')
+            # pk_user = kwargs['pk']
+            # pet_pk = int(pet_pk_str)
+            # owner_error = PetOwner.objects.get(pk=pk_user)
+            return render(request, 'vet/owners/delete.html', {'error_message': error_message})
 
 
 # Render text
@@ -181,9 +202,36 @@ class Test(View):
         return HttpResponse("Hello there, from generic class view!!!")
 
 
-
+''' 
 class Welcome(View):
     # Como función el método(GET,PATCH,POST.DELETE,PUT)
     def get(self, request):
         return HttpResponse("<div style='text-align:center;'><h1>Welcome to Vet App!!!</h1><div>")
+'''
 
+class Home(TemplateView):
+    # Rendering template
+    template_name = "vet/home.html"
+
+    # Passing context, overwriting class to pass context
+    def get_context_data(self, **kwargs):
+        # Catching inherited context by TemplateView class
+        context = super().get_context_data(**kwargs)
+        # Adding our custom context, retrieving data from our DB
+        try:
+            context["pets_count"] = Pet.objects.count()
+        except Pet.DoesNotExist:
+            context["pets_count"] = 0
+
+        try:
+            context["owners_count"] = PetOwner.objects.count()
+        except PetOwner.DoesNotExist:
+            context["owners_count"] = 0
+
+        try:
+            context["pet_date_count"] = PetDate.objects.count()
+        except PetDate.DoesNotExist:
+            context["pet_date_count"] = 0
+
+        # Returning context
+        return context

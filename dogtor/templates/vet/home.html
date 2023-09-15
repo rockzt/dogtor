@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+<title>Home</title>
+{% endblock title %}
+
+{% block header %}
+<h1>Main Admin Panel</h1>
+{% endblock header %}
+
+{% block content %}
+<div class="row">
+
+<div class="row d-flex col-5 justify-content-center">
+  <div class="col-sm-12 mt-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Appointments</h5>
+        <p class="card-text">Quantity: <span class="badge bg-secondary">{{ pet_date_count }}</span></p>
+        <a href="#" class="btn btn-warning disabled">Go Appointments</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 mt-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Owners</h5>
+        <p class="card-text">Quantity: <span class="badge bg-secondary">{{ owners_count }}</span></p>
+        <a href="/vet/owners" class="btn btn-danger">Go Owners</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 mt-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Pets</h5>
+        <p class="card-text">Quantity: <span class="badge bg-secondary">{{ pets_count }}</span></p>
+        <a href="/vet/pets" class="btn btn-primary">Go Pets</a>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="row col-7 mt-5 mb-5 text-center">
+    <h2>General View Graph</h2>
+    <canvas id="myChart" width="400" height="200"></canvas>
+  </div>
+
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script>
+// Chart loading data and colors
+document. addEventListener("DOMContentLoaded", function(){
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ["Appointments","Pets","Owners"],
+                datasets: [{
+                    label: '# of users',
+                    data: [ {{ pet_date_count }} , {{ pets_count }} , {{ owners_count }} ],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+});
+    });
+</script>
+{% endblock scripts %}
+
+
+{% block style %}
+{% endblock style %}

@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block title %}
-<title>Owner</title>
+<title>Pet</title>
 {% endblock title %}
 
 {% block header %}
-<h1>Delete Owner</h1>
+<h1>Delete Pet</h1>
 {% endblock header %}
 
 <!--the context is -> 'owner'-->
@@ -13,9 +13,10 @@
 {% block content %}
   {% if error_message %}
     <div class="alert alert-danger" role="alert">
-      Can not delete owner: {{ owner_error }}
+      Could not delete pet!!!
       <p><b>Error:</b>{{ error_message }}</p>
     </div>
+
     <div style="text-align: center;">
       <!--<h3>Recommendation: </h3>
       <p>Click here to edit pet´s owner ->
@@ -28,8 +29,8 @@
       <h5>Delete {{ object }}?</h5>
       <form method="POST">
         {% csrf_token %}
-        {{form}}
-        <a type="button" class="btn btn-danger" href="{% url 'vet:owners_list' %}">Cancel</a>
+        {{form.as_p}}
+        <a type="button" class="btn btn-danger" href="{% url 'vet:pets_list' %}">Cancel</a>
         <button type="submit" class="btn btn-success">Delete</button>
       </form>
     </div>-->
@@ -47,7 +48,7 @@
         </div>
       </div>
       <div class="card-footer">
-        <a type="button" class="btn btn-danger" href="{% url 'vet:owners_list' %}">Cancel</a>
+        <a type="button" class="btn btn-danger" href="{% url 'vet:pets_list' %}">Cancel</a>
       </div>
     </div>
   </div>

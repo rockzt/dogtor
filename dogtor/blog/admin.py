@@ -12,8 +12,9 @@ class PostAdmin(admin.ModelAdmin):
     fields = ["name"]
 
 
-
+# Registering Models and Passing Custom Model
 # Site -> Admin panel for blog app
+
 class BlogAdminArea(admin.AdminSite):
     """Blog admin panel administration."""
 
@@ -27,5 +28,5 @@ blog_admin_site = BlogAdminArea(name="BlogAdmin") # The passing argument its rep
        # Old Way Registering Models
 
 # Registering on the general admin panel
-# blog_admin_site.register(models.Post, PostAdmin)
+blog_admin_site.register(models.Post, PostAdmin)
 # admin.site.register(models.Post, PostAdmin)

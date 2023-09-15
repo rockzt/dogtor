@@ -9,12 +9,12 @@
 {% endblock header %}
 
 {% block content %}
-<div style="text-align: center">
-  <button><a href="{% url 'vet:owners_create'%}">Create Owner</a></button>
+<div class="text-center mt-3">
+  <a href="{% url 'vet:owners_create'%}" class="btn btn-primary"  role="button">Create Owner</a>
 </div>
 <br>
-<div style="align-items: center">
-<table style="text-align: center;align-items: center;margin-left: auto;margin-right: auto;">
+<div class="mt-3">
+<table class="table table-hover text-center">
   <tr>
     <th>ID</th>
     <th>First Name</th>
@@ -28,9 +28,14 @@
     <td>  <a href="{% url 'vet:owners_detail' pk=owner.id %}">{{ owner.id }}</a> </td>
     <td>{{ owner.first_name }}</td>
     <td>{{ owner.email }}</td>
-    <td><a href="{% url 'vet:owners_detail' pk=owner.id %}">View</a> | <a href="{% url 'vet:owners_edit' pk=owner.id %}">Modify</a> | <a href="{% url 'vet:owners_delete' pk=owner.id %}">DELETE</a> </td>
+    <td>
+        <a href="{% url 'vet:owners_detail' pk=owner.id %}" class="btn btn-link"  role="button">View</a>
+        <a href="{% url 'vet:owners_edit' pk=owner.id %}" class="btn btn-warning"  role="button">Modify</a>
+        <a href="{% url 'vet:owners_delete' pk=owner.id %}" class="btn btn-danger"  role="button">DELETE</a>
+    </td>
   </tr>
   {% endfor %}
 </table>
+  {% include "pagination.html" %}
 </div>
 {% endblock content %}
