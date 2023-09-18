@@ -6,32 +6,56 @@
 {% endblock title %}
 
 {% block header %}
-<h1>Main Admin Panel</h1>
+<h1>General View</h1>
 {% endblock header %}
 
 {% block content %}
-<div class="row">
+<div class="row mt-2 mb-4">
+  <div class="col-12 mb-3 text-start">
+  <h3>Last Records Created</h3>
+  </div>
+  <div class="col-4 text-center">
+    <div class="alert alert-primary" role="alert">
+      <p><b>Pet: </b>{{pet_last_created}}</p>
+    </div>
+  </div>
+  <div class="col-4 text-center">
+    <div class="alert alert-warning" role="alert">
+      <p><b>Owner: </b>{{pet_owner_last_created}}</p>
+    </div>
+  </div>
+  <div class="col-4 text-center">
+    <div class="alert alert-danger" role="alert">
+      <p><b>Appointment: </b>{{pet_date_last_created}}</p>
+    </div>
+  </div>
+</div>
+<div class="row justify-content-center">
 
-<div class="row d-flex col-5 justify-content-center">
-  <div class="col-sm-12 mt-4">
+<div class="row col-xs-12 col-md-7 text-center justify-content-center">
+    <h2>Graphic</h2>
+    <canvas id="myChart" width="450px" height="150px"></canvas>
+</div>
+<div class="row d-flex col-xs-12 col-md-5 justify-content-center">
+  <div class="col-sm-12  mt-2">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Appointments</h5>
         <p class="card-text">Quantity: <span class="badge bg-secondary">{{ pet_date_count }}</span></p>
-        <a href="#" class="btn btn-warning disabled">Go Appointments</a>
+        <a href="#" class="btn btn-danger disabled">Go Appointments</a>
       </div>
     </div>
   </div>
-  <div class="col-sm-12 mt-4">
+  <div class="col-sm-12  mt-2">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Owners</h5>
         <p class="card-text">Quantity: <span class="badge bg-secondary">{{ owners_count }}</span></p>
-        <a href="/vet/owners" class="btn btn-danger">Go Owners</a>
+        <a href="/vet/owners" class="btn btn-warning">Go Owners</a>
       </div>
     </div>
   </div>
-  <div class="col-sm-12 mt-4">
+  <div class="col-sm-12  mt-2">
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">Pets</h5>
@@ -41,12 +65,9 @@
     </div>
   </div>
 </div>
-  <div class="row col-7 mt-5 mb-5 text-center">
-    <h2>General View Graph</h2>
-    <canvas id="myChart" width="400" height="200"></canvas>
-  </div>
 
 </div>
+
 
 {% endblock content %}
 
