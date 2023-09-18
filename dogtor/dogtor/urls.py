@@ -28,7 +28,11 @@ urlpatterns = [
     path('vet/', include(('vet.urls', "vet"))),
 ]
 
-# Customizing admin panel (title, header, )
+# Customizing admin panel (title, header, title tab )
 admin.site.index_title = "Dogtor"
 admin.site.site_header = "Dogtor Admin"
 admin.site.site_title = "Dogtor Admin Panel"
+
+# Customizing the built error pages
+handler404 = 'vet.views.error_404'
+handler403 = 'vet.views.error_403'

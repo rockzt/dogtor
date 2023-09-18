@@ -233,5 +233,27 @@ class Home(TemplateView):
         except PetDate.DoesNotExist:
             context["pet_date_count"] = 0
 
+        try:
+            context["pet_last_created"] = Pet.objects.last()
+        except PetDate.DoesNotExist:
+            context["pet_last_created"] = ""
+
+        try:
+            context["pet_owner_last_created"] = PetOwner.objects.last()
+        except PetDate.DoesNotExist:
+            context["pet_owner_date_count"] = ""
+
+        try:
+            context["pet_date_last_created"] = PetDate.objects.last()
+        except PetDate.DoesNotExist:
+            context["pet_date_last_created"] = ""
+
         # Returning context
         return context
+
+# Customized Error Views
+def error_404(request, exception):
+    return render(request, 'vet/404.html')
+
+def error_403(request, exception):
+    return render(request, 'vet/403.html')

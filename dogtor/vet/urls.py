@@ -10,7 +10,7 @@ from .views import list_pet_owners, Test, OwnersList, Home, OwnersDetail, PetsLi
 # SINTAXIS
 # If you want to access  "vet:owners_list"
 urlpatterns = [
-    path('', Home.as_view()),
+    path('', Home.as_view(),name="home"),
     path('owners/', OwnersList.as_view(), name="owners_list"), # Configuring generic class view, Listview, renders template, include and alias  "owners_list", this is the sintaxis when you do not posess include
     path('owners/<int:pk>', OwnersDetail.as_view(), name="owners_detail"), # Configuring generic class view, DetailView, renders template, include and alias  "owners_list"
     path('owners/add/', OwnersCreate.as_view(), name="owners_create"), # Configuring CreateView of owners
