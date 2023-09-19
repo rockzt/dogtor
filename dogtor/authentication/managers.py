@@ -5,6 +5,8 @@ class ModUserManager(BaseUserManager):
     """Mode User Custom Manager"""
 
     # Contains already two functions
+
+
     # 1.- create_user
     # rock -> 123456#
     def create_user(self, email, user_name, first_name, password, **other_fields):
@@ -23,7 +25,7 @@ class ModUserManager(BaseUserManager):
                           #password=password, remove it or password would be store as plain text
                           **other_fields
                           )
-        # Proceed to store password encrypted
+        # Proceed to store password encrypted sha256
         user.set_password(password)
 
         # Save user on DB

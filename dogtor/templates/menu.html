@@ -19,16 +19,16 @@
             <a class="nav-link disabled" href="/vet/appointments">Appointments</a>
           </li>
       </ul>
-      <form class="d-flex">
+      <div class="d-flex align-self-center">
           <!-- if user is authenticated displays logout button-->
           {% if request.user.is_authenticated %}
-            <p>Welcome {{ request.user.user_name }} </p>
+            <p><b>{{ request.user.user_name }}</b></p>
             <a href="/accounts/logout/" class="btn btn-outline-danger">Log Out</a>
           {% else %}
           <!-- otherwise displays login button -->
             <a href="/accounts/login/" class="btn btn-success">Login</a>
           {% endif %}
-      </form>
+      </div>
     </div>
   </div>
 </nav>

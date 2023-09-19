@@ -6,12 +6,27 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
 </head>
 <body>
-    <form method="POST">
-        {% csrf_token %}
-        {{form}}  <!--loading login form-->
-        <button type="submit" class="btn btn-warning">Login</button>
-    </form>
+<div class="container text-center mt-5 text-center">
+<form method="POST">
+    {% csrf_token %}
+  <!-- Email input -->
+    {{ form.as_p }}
+  <!-- 2 column grid layout for inline styling -->
+  <div class="row mb-4">
+    <div class="col">
+      <!-- Simple link -->
+      <a href="#!">Forgot password?</a>
+    </div>
+  </div>
+
+  <!-- Submit button -->
+  <button type="submit" class="btn btn-success btn-block mb-4">Log in</button>
+</form>
+</div>
 </body>
 </html>
