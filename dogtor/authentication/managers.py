@@ -1,7 +1,7 @@
 from django.contrib.auth.models import BaseUserManager
 
 
-class ModUserManager():
+class ModUserManager(BaseUserManager):
     """Mode User Custom Manager"""
 
     # Contains already two functions
