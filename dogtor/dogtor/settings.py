@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap5',
+    'authentication',
     'vet',
     'blog'
 ]
@@ -123,6 +124,10 @@ USE_TZ = True
 # Redirect's URL to login
 LOGIN_REDIRECT_URL = '/vet/owners'
 LOGOUT_REDIRECT_URL = '/'
+
+# AUTH_USER we are going to use
+
+AUTH_USER_MODEL = 'authentication.ModUser'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

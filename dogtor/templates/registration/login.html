@@ -8,7 +8,7 @@
     <title>Login</title>
 </head>
 <body>
-    <form action="POST">
+    <form method="POST">
         {% csrf_token %}
         {{form}}  <!--loading login form-->
         <button type="submit" class="btn btn-warning">Login</button>
