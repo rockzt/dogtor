@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.template import loader
 from django.http import HttpResponse
-from django.contrib.auth.mixins import PermissionRequiredMixin  # Importing permissions for views
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin  # Importing permissions for views and login required
 from django.views.generic import (View,
                                   TemplateView,
                                   ListView,
@@ -56,7 +56,7 @@ class OwnersList(ListView):
     context_object_name = "owners" # 3 Context
     paginate_by = 2  # Pagination parameter, how many records you want to show per page -> 1
 
-class OwnersDetail(DetailView):
+class OwnersDetail(LoginRequiredMixin ,DetailView):  # When inheriting from LoginRequiredMixin, you must be logged to access this view
     """Renders a specific Pet Owner with their pk"""
     # 1. Modelo
     # 2. Template to create
@@ -133,7 +133,7 @@ class OwnersUpdate(PermissionRequiredMixin ,UpdateView):
     # app.action_mode
     permission_required = "vet.change_petowner" #app.how is it named on admin in the group section on permission assigned, just the user with this permission can access to this view
     raise_exception = False  # True -> Raise exception when you do not have permission
-    login_url = "/admin/login"  # redirect url in case you are not logged
+    login_url = "/admin/login"  # redirect url in case you are not logged, this urls redirect you to the login admin panel
     redirect_field_name = "next" # related to query param
 
     model = PetOwner

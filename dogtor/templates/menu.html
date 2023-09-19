@@ -20,7 +20,14 @@
           </li>
       </ul>
       <form class="d-flex">
-          <a href="/admin/login/" class="btn btn-outline-success">Login Admin Panel</a>
+          <!-- if user is authenticated displays logout button-->
+          {% if request.user.is_authenticated %}
+            <p>Welcome {{ request.user.user_name }} </p>
+            <a href="/accounts/logout/" class="btn btn-outline-danger">Log Out</a>
+          {% else %}
+          <!-- otherwise displays login button -->
+            <a href="/accounts/login/" class="btn btn-success">Login</a>
+          {% endif %}
       </form>
     </div>
   </div>
