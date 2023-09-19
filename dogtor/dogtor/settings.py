@@ -123,7 +123,7 @@ USE_TZ = True
 
 # Redirect's URL to login
 LOGIN_REDIRECT_URL = '/vet/owners'
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/vet/'
 
 # AUTH_USER we are going to use
 
