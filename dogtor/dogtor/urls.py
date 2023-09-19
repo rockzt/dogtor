@@ -25,7 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),  # Personalized admin panel, defualt when creating a project
     path('blogadmin/', blog_admin_site.urls), # Importing Model Class to customize admin panel
     path('vetadmin/', vet_admin_site.urls), # Importing Model Class to customize admin panel
-    path('vet/', include(('vet.urls', "vet"))),
+    path('vet/', include(('vet.urls', "vet"))),  # Importing urls project
+    path('accounts/', include('django.contrib.auth.urls')),  # All urls related to the project are placed on this url
 ]
 
 # Customizing admin panel (title, header, title tab )

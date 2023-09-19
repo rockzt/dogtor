@@ -130,11 +130,14 @@ class OwnersCreate(CreateView):
 class OwnersUpdate(PermissionRequiredMixin ,UpdateView):
     """View used to update a PetOwner"""
     # Permission required to access this view
+    # app.action_mode
     permission_required = "vet.change_petowner" #app.how is it named on admin in the group section on permission assigned, just the user with this permission can access to this view
-    raise_exception = True  # Raise exception when you do not have permission
+    raise_exception = False  # True -> Raise exception when you do not have permission
+    login_url = "/admin/login"  # redirect url in case you are not logged
+    redirect_field_name = "next" # related to query param
 
     model = PetOwner
-    template_name =  "vet/owners/update.html"
+    template_name = "vet/owners/update.html"
     form_class = OwnerForm # If you want to update specific fields, you can create another form  in forms.py with specific fields
 
     success_url = reverse_lazy('vet:owners_list')  # 4
