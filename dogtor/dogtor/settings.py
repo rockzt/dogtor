@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'bootstrap5',
     'authentication',
     'vet',
-    'blog'
+    'blog',
+    'rest_framework', # rest framework
+    'api'  # Our api APP
 ]
 
 MIDDLEWARE = [

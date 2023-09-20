@@ -54,7 +54,7 @@ class OwnersList(ListView):
     model = PetOwner # 1 Model
     template_name = 'vet/owners/list.html' # 2 Template
     context_object_name = "owners" # 3 Context
-    paginate_by = 2  # Pagination parameter, how many records you want to show per page -> 1
+    paginate_by = 4  # Pagination parameter, how many records you want to show per page -> 1
 
 class OwnersDetail(LoginRequiredMixin ,DetailView):  # When inheriting from LoginRequiredMixin, you must be logged to access this view
     """Renders a specific Pet Owner with their pk"""
@@ -73,7 +73,7 @@ class PetsList(ListView):
     context_object_name = "pets"  # 3 Context
     paginate_by = 3  # Pagination parameter, how many records you want to show per page -> 1
 
-class PetDetail(DetailView):
+class PetsDetail(DetailView):
     # Rendering template
 
     model = Pet

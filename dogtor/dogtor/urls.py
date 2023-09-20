@@ -27,6 +27,7 @@ urlpatterns = [
     path('vetadmin/', vet_admin_site.urls), # Importing Model Class to customize admin panel
     path('vet/', include(('vet.urls', "vet"))),  # Importing urls project
     path('accounts/', include('django.contrib.auth.urls')),  # All urls related to the project are placed on this url
+    path('api/', include(('api.urls', 'api'))), # API's urls app
 ]
 
 # Customizing admin panel (title, header, title tab )
