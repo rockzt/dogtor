@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Petsdates</title>
+{% endblock title %}
+
+{% block header %}
+<h1>Petdates list</h1>
+{% endblock header %}
+
+{% block content %}
+<div class="text-center mt-3 mb-3">
+  <a href="{% url 'vet:pets_create'%}" class="btn btn-primary"  role="button">Create Pet</a>
+</div>
+<br>
+{% if petdates %}
+<table class="table table-hover text-center">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Owner</th>
+    <th>Actions</th>
+  </tr>
+    {% for petdate in petdates %}
+    <tr>
+      <td>  <a href="{% url 'vet:pets_detail' pk=petdate.id %}">{{ petdate.id }}</a> </td>
+      <td>{{ petdate.name }}</td>
+      <td>{{ petdate.type }}</td>
+      <td>{{ petdate.owner }}</td>
+      <td>
+          <a href="{% url 'vet:pets_detail' pk=petdate.id %}" class="btn btn-link"  role="button">View</a>
+          <a href="{% url 'vet:pets_edit' pk=petdate.id %}" class="btn btn-warning"  role="button">Modify</a>
+          <a href="{% url 'vet:pets_delete' pk=petdate.id %}" class="btn btn-danger"  role="button">DELETE</a>
+      </td>
+    </tr>
+    {% endfor %}
+</table>
+  {% include "pagination.html" %}
+{% else  %}
+  <h1>DATA NOT FOUND</h1>
+{% endif  %}
+{% endblock content %}
