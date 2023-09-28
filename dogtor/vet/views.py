@@ -54,7 +54,8 @@ class OwnersList(ListView):
     model = PetOwner # 1 Model
     template_name = 'vet/owners/list.html' # 2 Template
     context_object_name = "owners" # 3 Context
-    paginate_by = 4  # Pagination parameter, how many records you want to show per page -> 1
+    paginate_by = 6  # Pagination parameter, how many records you want to show per page -> 1
+    ordering = 'created_at'  # Sorting results
 
 class OwnersDetail(LoginRequiredMixin ,DetailView):  # When inheriting from LoginRequiredMixin, you must be logged to access this view
     """Renders a specific Pet Owner with their pk"""
@@ -71,7 +72,8 @@ class PetsList(ListView):
     model = Pet  # 1 Model
     template_name = "vet/pets/list.html"  # 2 Template
     context_object_name = "pets"  # 3 Context
-    paginate_by = 3  # Pagination parameter, how many records you want to show per page -> 1
+    paginate_by = 6  # Pagination parameter, how many records you want to show per page -> 1
+    ordering = 'created_at' # Sorting results
 
 class PetsDetail(DetailView):
     # Rendering template
@@ -79,6 +81,20 @@ class PetsDetail(DetailView):
     model = Pet
     template_name = "vet/pets/detail.html"
     context_object_name = "pet"
+
+
+class PetdatesList(ListView):
+    model = PetDate
+    template_name = "vet/petdates/list.html"
+    context_object_name = "petdates"
+    paginate_by = 6
+    ordering = 'created_at'
+
+class PetdatesDetial(DetailView):
+    model = PetDate
+    template_name = "vet/petdates/detail.html"
+    context_object_name = "petdate"
+
 
 '''
       USING TEMPLATE VIEW

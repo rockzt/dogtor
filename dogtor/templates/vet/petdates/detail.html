@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Appointment Details</title>
+{% endblock title %}
+
+{% block header %}
+<h1>Appointment Details</h1>
+{% endblock header %}
+
+<!--the context is -> 'owner'-->
+
+{% block content %}
+    {% if petdate %}
+<div class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center">
+  <div class="col">
+    <div class="card h-100">
+      <img src="" class="card-img-top"
+        alt="Petdate_Image_Cartoon" />
+      <div class="card-body">
+        <h5 class="card-title">Appoinment: {{ petdate.datetime }}</h5>
+        <p class="card-text">
+            <b>Procedure:</b> {{ petdate.type }} <b>|</b>
+            <b>Owner:</b> {{ petdate.pet.owner }}
+        </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted">Pet's name: <b>{{ petdate.pet.name }}</b></small>
+          <br>
+        <a type="button" class="btn btn-danger mt-2" href="{% url 'vet:petdates_list' %}">Return</a>
+      </div>
+    </div>
+  </div>
+</div>
+    {% else  %}
+    <h1>DATA NOT FOUND</h1>
+    {% endif  %}
+{% endblock content %}
