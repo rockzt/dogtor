@@ -1,6 +1,6 @@
 from django.urls import path
 # Views            function view|          Class view|
-from .views import list_pet_owners, Test, OwnersList, Home, OwnersDetail, PetsList, PetsDetail, OwnersCreate, OwnersUpdate, PetsCreate, PetsUpdate, OwnersDelete, PetsDelete
+from .views import list_pet_owners, Test, OwnersList, Home, OwnersDetail, PetsList, PetsDetail, OwnersCreate, OwnersUpdate, PetsCreate, PetsUpdate, OwnersDelete, PetsDelete, PetdatesList, PetdatesDetial
 
 # alias (reversed urls) -> app's urls in specific
 # alias (reversed urls) -> project's routes
@@ -21,5 +21,7 @@ urlpatterns = [
     path('pets/<int:pk>/edit', PetsUpdate.as_view(), name="pets_edit"), # Configuring CreateView of Pets
     path('pets', PetsList.as_view(), name="pets_list"), # Configuring generic class view, renders template
     path('pets/<int:pk>', PetsDetail.as_view(), name="pets_detail"), # Configuring generic class view, renders template
+    path('petdates', PetdatesList.as_view(), name="petdates_list"), # Configuring generic class view, renders template
+    path('petdates/<int:pk>', PetdatesDetial.as_view(), name="petdates_detail"), # Configuring generic class view, renders template
     path('test', Test.as_view()), # Configuring generic class view, this class does not render template
 ]
