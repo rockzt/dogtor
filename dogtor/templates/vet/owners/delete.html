@@ -13,14 +13,10 @@
 {% block content %}
   {% if error_message %}
     <div class="alert alert-danger" role="alert">
-      Can not delete owner: {{ owner_error }}
+      Can not delete: {{ owner_error }}
       <p><b>Error:</b>{{ error_message }}</p>
     </div>
     <div style="text-align: center;">
-      <!--<h3>Recommendation: </h3>
-      <p>Click here to edit pet´s owner ->
-          <a href="{% url 'vet:pets_edit' pk=pet_pk %}" class="btn btn-warning"  role="button">Edit Pet</a>
-      </p>-->
       <a type="button" class="btn btn-danger" href="{% url 'vet:owners_list' %}">Return</a>
     </div>
   {% else %}

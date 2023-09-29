@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Appointment</title>
+{% endblock title %}
+
+{% block header %}
+<h1>Edit Appointment </h1>
+{% endblock header %}
+
+<!--the context is -> 'owner'-->
+{% block content %}
+<!--<form method ="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Update</button>
+</form>-->
+
+<div class="card-body">
+    <h5>Update Appointment</h5>
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}  <!--loading form-->
+        <a type="button" class="btn btn-danger" href="{% url 'vet:petdates_list' %}">Cancel</a>
+        <button type="submit" class="btn btn-success">Update</button>
+    </form>
+</div>
+{% endblock content %}
+<script>
+  $(function () {
+    $("#datetimepicker1").datetimepicker({
+      format: 'DD/MM/YYYY HH:mm',
+    });
+  });
+</script>
