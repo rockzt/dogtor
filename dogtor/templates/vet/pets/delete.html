@@ -13,16 +13,12 @@
 {% block content %}
   {% if error_message %}
     <div class="alert alert-danger" role="alert">
-      Could not delete pet!!!
+      Can not delete!!!
       <p><b>Error:</b>{{ error_message }}</p>
     </div>
 
     <div style="text-align: center;">
-      <!--<h3>Recommendation: </h3>
-      <p>Click here to edit pet´s owner ->
-          <a href="{% url 'vet:pets_edit' pk=pet_pk %}" class="btn btn-warning"  role="button">Edit Pet</a>
-      </p>-->
-      <a type="button" class="btn btn-danger" href="{% url 'vet:owners_list' %}">Return</a>
+      <a type="button" class="btn btn-danger" href="{% url 'vet:pets_list' %}">Return</a>
     </div>
   {% else %}
     <!--<div class="card-body">

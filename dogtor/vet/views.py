@@ -10,7 +10,7 @@ from django.views.generic import (View,
                                   UpdateView,
                                   DeleteView
                                   ) # Importing TemplateView for generic class view
-from .forms import OwnerForm, PetForm# Importing forms that will be used on views
+from .forms import OwnerForm, PetForm, PetdateForm# Importing forms that will be used on views
 from django.urls import reverse_lazy  # Importing to use reversed urls
 # Models
 from vet.models import PetOwner, Pet, PetDate
@@ -47,7 +47,7 @@ class OwnersList(TemplateView):
         return context
 '''
 
-class OwnersList(ListView):
+class OwnersList(LoginRequiredMixin ,ListView):
     # 1.- Use model we want to use.
     # 2.- Pass template to render.
     # 3.- Pass the context with the data we want to manipulate.
@@ -55,7 +55,7 @@ class OwnersList(ListView):
     template_name = 'vet/owners/list.html' # 2 Template
     context_object_name = "owners" # 3 Context
     paginate_by = 6  # Pagination parameter, how many records you want to show per page -> 1
-    ordering = 'created_at'  # Sorting results
+    ordering = '-created_at'  # Sorting results
 
 class OwnersDetail(LoginRequiredMixin ,DetailView):  # When inheriting from LoginRequiredMixin, you must be logged to access this view
     """Renders a specific Pet Owner with their pk"""
@@ -66,16 +66,18 @@ class OwnersDetail(LoginRequiredMixin ,DetailView):  # When inheriting from Logi
     template_name = 'vet/owners/detail.html'
     context_object_name = "owner"
 
-class PetsList(ListView):
+
+class PetsList(LoginRequiredMixin ,ListView):
     # Rendering template
 
     model = Pet  # 1 Model
     template_name = "vet/pets/list.html"  # 2 Template
     context_object_name = "pets"  # 3 Context
     paginate_by = 6  # Pagination parameter, how many records you want to show per page -> 1
-    ordering = 'created_at' # Sorting results
+    ordering = '-created_at' # Sorting results
 
-class PetsDetail(DetailView):
+
+class PetsDetail(LoginRequiredMixin, DetailView):
     # Rendering template
 
     model = Pet
@@ -83,14 +85,15 @@ class PetsDetail(DetailView):
     context_object_name = "pet"
 
 
-class PetdatesList(ListView):
+class PetdatesList(LoginRequiredMixin, ListView):
     model = PetDate
     template_name = "vet/petdates/list.html"
     context_object_name = "petdates"
     paginate_by = 6
-    ordering = 'created_at'
+    ordering = '-created_at'
 
-class PetdatesDetial(DetailView):
+
+class PetdatesDetial(LoginRequiredMixin, DetailView):
     model = PetDate
     template_name = "vet/petdates/detail.html"
     context_object_name = "petdate"
@@ -130,7 +133,7 @@ class PetDetail(TemplateView):
         # Returning context
         return context
 '''
-class OwnersCreate(CreateView):
+class OwnersCreate(LoginRequiredMixin, CreateView):
     """View used to create PetOwner"""
     # 1.- Model
     # 2.- Template to render
@@ -143,13 +146,13 @@ class OwnersCreate(CreateView):
     success_url = reverse_lazy('vet:owners_list') # 4
 
 
-class OwnersUpdate(PermissionRequiredMixin ,UpdateView):
+class OwnersUpdate(LoginRequiredMixin, PermissionRequiredMixin ,UpdateView):
     """View used to update a PetOwner"""
     # Permission required to access this view
     # app.action_mode
     permission_required = "vet.change_petowner" #app.how is it named on admin in the group section on permission assigned, just the user with this permission can access to this view
     raise_exception = False  # True -> Raise exception when you do not have permission
-    login_url = "/admin/login"  # redirect url in case you are not logged, this urls redirect you to the login admin panel
+    login_url = "/accounts/login/"  # redirect url in case you are not logged, this urls redirect you to the login admin panel
     redirect_field_name = "next" # related to query param
 
     model = PetOwner
@@ -159,7 +162,7 @@ class OwnersUpdate(PermissionRequiredMixin ,UpdateView):
     success_url = reverse_lazy('vet:owners_list')  # 4
 
 
-class PetsCreate(CreateView):
+class PetsCreate(LoginRequiredMixin, CreateView):
     """View used to create Pet"""
 
     model = Pet # 1
@@ -168,7 +171,7 @@ class PetsCreate(CreateView):
     success_url = reverse_lazy('vet:pets_list') # 4
 
 
-class PetsUpdate(UpdateView):
+class PetsUpdate(LoginRequiredMixin, UpdateView):
     """View used to update a PetOwner"""
     model = Pet
     template_name =  "vet/pets/update.html"
@@ -176,7 +179,31 @@ class PetsUpdate(UpdateView):
 
     success_url = reverse_lazy('vet:pets_list')  # 4
 
-class OwnersDelete(DeleteView):
+
+class PetdatesCreate(LoginRequiredMixin, CreateView):
+    """View used to create PetOwner"""
+    # 1.- Model
+    # 2.- Template to render
+    # 3.- Form it's going to be created with
+    # 4.- The url if the request was successful and will be redirected to this-> reversed url
+
+    model = PetDate # 1
+    template_name = "vet/petdates/create.html" # 2
+    form_class = PetdateForm # 3
+    success_url = reverse_lazy('vet:petdates_list') # 4
+
+
+class PetsdatesUpdate(LoginRequiredMixin, UpdateView):
+    """View used to update a PetOwner"""
+    model = PetDate
+    template_name =  "vet/petdates/update.html"
+    form_class = PetdateForm # If you want to update specific fields, you can create another form  in forms.py with specific fields
+
+    success_url = reverse_lazy('vet:petdates_list')  # 4
+
+
+
+class OwnersDelete(LoginRequiredMixin, DeleteView):
     model = PetOwner
     template_name = "vet/owners/delete.html"
     success_url = reverse_lazy('vet:owners_list')
@@ -195,7 +222,7 @@ class OwnersDelete(DeleteView):
             return render(request, 'vet/owners/delete.html', {'error_message': error_message, 'owner_error': owner_error, 'pet_pk' : pet_pk})
 
 
-class PetsDelete(DeleteView):
+class PetsDelete(LoginRequiredMixin, DeleteView):
     model = Pet
     template_name = "vet/pets/delete.html"
     success_url = reverse_lazy('vet:pets_list')
@@ -205,13 +232,8 @@ class PetsDelete(DeleteView):
             return super().delete(request, *args, **kwargs)
         except ProtectedError as e:
             # Customize the error message
-            error_message = f"Cannot delete pet -> ({e})"
-            # res = str(e).split(', ')
-            # pet_pk_str = res[3].replace('>', '').replace('}', '').replace(')', '')
-            # pk_user = kwargs['pk']
-            # pet_pk = int(pet_pk_str)
-            # owner_error = PetOwner.objects.get(pk=pk_user)
-            return render(request, 'vet/owners/delete.html', {'error_message': error_message})
+            error_message = f"Cannot delete pet, has at least one related Appointment -> ({e})"
+            return render(request, 'vet/pets/delete.html', {'error_message': error_message})
 
 
 # Render text
