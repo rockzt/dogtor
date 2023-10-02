@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []   # Set '*' when DEBUG = False to make it work with customize
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',
+    'jazzmin',  # Custom Theme for admin panel
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -126,7 +126,7 @@ USE_TZ = True
 
 
 # Redirect's URL to login
-LOGIN_REDIRECT_URL = '/vet/owners'
+LOGIN_REDIRECT_URL = '/vet/'
 LOGOUT_REDIRECT_URL = '/vet/'
 
 # AUTH_USER we are going to use

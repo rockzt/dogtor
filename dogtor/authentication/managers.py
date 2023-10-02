@@ -29,9 +29,16 @@ class ModUserManager(BaseUserManager):
         user.set_password(password)
 
         # Save user on DB
-        user.save()
+        user.save(using=self._db)
         return user
 
+    def create_staffuser(self, email, user_name, first_name, password, **other_fields):
+        """
+        Creates and saves a staff user with the given email and password.
+        """
+        other_fields.setdefault("is_staff", True)  # Setting field is_staff -> True
+        other_fields.setdefault("is_active", True)  # Setting field is_staff -> True
+        return self.create_user(email, user_name, first_name, password, **other_fields)
 
 
     # 2.- create_superuser
@@ -47,4 +54,3 @@ class ModUserManager(BaseUserManager):
 
         # Creating superuser using the previous written function
         return self.create_user(email, user_name, first_name, password, **other_fields)
-

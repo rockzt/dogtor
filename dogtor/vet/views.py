@@ -32,6 +32,8 @@ def list_pet_owners(request):
     template = loader.get_template("vet/owners/list.html")
     return HttpResponse(template.render(context, request))
 
+
+
 # Render template
 '''
 class OwnersList(TemplateView):
@@ -135,6 +137,11 @@ class PetDetail(TemplateView):
 '''
 class OwnersCreate(LoginRequiredMixin, CreateView):
     """View used to create PetOwner"""
+    permission_required = "vet.add_petowner"  # app.how is it named on admin in the group section on permission assigned, just the user with this permission can access to this view
+    raise_exception = False  # True -> Raise exception when you do not have permission
+    login_url = "/accounts/login/"  # redirect url in case you are not logged, this urls redirect you to the log in admin panel
+    redirect_field_name = "next"  # related to query param
+
     # 1.- Model
     # 2.- Template to render
     # 3.- Form it's going to be created with
@@ -152,7 +159,7 @@ class OwnersUpdate(LoginRequiredMixin, PermissionRequiredMixin ,UpdateView):
     # app.action_mode
     permission_required = "vet.change_petowner" #app.how is it named on admin in the group section on permission assigned, just the user with this permission can access to this view
     raise_exception = False  # True -> Raise exception when you do not have permission
-    login_url = "/accounts/login/"  # redirect url in case you are not logged, this urls redirect you to the login admin panel
+    login_url = "/accounts/login/"  # redirect url in case you are not logged, this urls redirect you to the log in admin panel
     redirect_field_name = "next" # related to query param
 
     model = PetOwner
@@ -164,15 +171,26 @@ class OwnersUpdate(LoginRequiredMixin, PermissionRequiredMixin ,UpdateView):
 
 class PetsCreate(LoginRequiredMixin, CreateView):
     """View used to create Pet"""
+    permission_required = "vet.add_pet"  # app.how is it named on admin in the group section on permission assigned, just the user with this permission can access to this view
+    raise_exception = False  # True -> Raise exception when you do not have permission
+    login_url = "/accounts/login/"  # redirect url in case you are not logged, this urls redirect you to the log in admin panel
+    redirect_field_name = "next"  # related to query param
 
     model = Pet # 1
     template_name = "vet/pets/create.html" # 2
     form_class = PetForm # 3
+
     success_url = reverse_lazy('vet:pets_list') # 4
 
 
 class PetsUpdate(LoginRequiredMixin, UpdateView):
     """View used to update a PetOwner"""
+    permission_required = "vet.change_pet"  # app.how is it named on admin in the group section on permission assigned, just the user with this permission can access to this view
+    raise_exception = False  # True -> Raise exception when you do not have permission
+    login_url = "/accounts/login/"  # redirect url in case you are not logged, this urls redirect you to the log in admin panel
+    redirect_field_name = "next"  # related to query param
+
+
     model = Pet
     template_name =  "vet/pets/update.html"
     form_class = PetForm # If you want to update specific fields, you can create another form  in forms.py with specific fields
@@ -182,6 +200,10 @@ class PetsUpdate(LoginRequiredMixin, UpdateView):
 
 class PetdatesCreate(LoginRequiredMixin, CreateView):
     """View used to create PetOwner"""
+    permission_required = "vet.add_petdate"  # app.how is it named on admin in the group section on permission assigned, just the user with this permission can access to this view
+    raise_exception = False  # True -> Raise exception when you do not have permission
+    login_url = "/accounts/login/"  # redirect url in case you are not logged, this urls redirect you to the log in admin panel
+    redirect_field_name = "next"  # related to query param
     # 1.- Model
     # 2.- Template to render
     # 3.- Form it's going to be created with
@@ -190,11 +212,17 @@ class PetdatesCreate(LoginRequiredMixin, CreateView):
     model = PetDate # 1
     template_name = "vet/petdates/create.html" # 2
     form_class = PetdateForm # 3
+
     success_url = reverse_lazy('vet:petdates_list') # 4
 
 
 class PetsdatesUpdate(LoginRequiredMixin, UpdateView):
     """View used to update a PetOwner"""
+    permission_required = "vet.change_petdate"  # app.how is it named on admin in the group section on permission assigned, just the user with this permission can access to this view
+    raise_exception = False  # True -> Raise exception when you do not have permission
+    login_url = "/accounts/login/"  # redirect url in case you are not logged, this urls redirect you to the log in admin panel
+    redirect_field_name = "next"  # related to query param
+
     model = PetDate
     template_name =  "vet/petdates/update.html"
     form_class = PetdateForm # If you want to update specific fields, you can create another form  in forms.py with specific fields
@@ -204,9 +232,17 @@ class PetsdatesUpdate(LoginRequiredMixin, UpdateView):
 
 
 class OwnersDelete(LoginRequiredMixin, DeleteView):
+    #permission_required = "vet.delete_petowner"  # app.how is it named on admin in the group section on permission assigned, just the user with this permission can access to this view
+    #raise_exception = False  # True -> Raise exception when you do not have permission
+    #login_url = "/accounts/login/"  # redirect url in case you are not logged, this urls redirect you to the log in admin panel
+    #redirect_field_name = "next"  # related to query param
+
     model = PetOwner
+
     template_name = "vet/owners/delete.html"
+
     success_url = reverse_lazy('vet:owners_list')
+
 
     def post(self, request, *args, **kwargs):
         try:
@@ -223,9 +259,18 @@ class OwnersDelete(LoginRequiredMixin, DeleteView):
 
 
 class PetsDelete(LoginRequiredMixin, DeleteView):
+    # This only works four users on admin section
+    permission_required = "vet.delete_pet"  # app.how is it named on admin in the group section on permission assigned, just the user with this permission can access to this view
+    raise_exception = False  # True -> Raise exception when you do not have permission
+    login_url = "/accounts/login/"  # redirect url in case you are not logged, this urls redirect you to the log in admin panel
+    redirect_field_name = "next"  # related to query param
+
     model = Pet
     template_name = "vet/pets/delete.html"
+
     success_url = reverse_lazy('vet:pets_list')
+
+
 
     def post(self, request, *args, **kwargs):
         try:
@@ -298,3 +343,6 @@ def error_404(request, exception):
 
 def error_403(request, exception):
     return render(request, 'vet/403.html')
+
+
+# Permission Check
