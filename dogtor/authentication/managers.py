@@ -27,7 +27,7 @@ class ModUserManager(BaseUserManager):
                           )
         # Proceed to store password encrypted sha256
         user.set_password(password)
-
+        other_fields.setdefault("is_active", True)
         # Save user on DB
         user.save(using=self._db)
         return user
