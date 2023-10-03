@@ -17,6 +17,8 @@ from vet.models import PetOwner, Pet, PetDate
 # Handling Errors on Delete View
 from django.db.models import ProtectedError
 from django.shortcuts import render
+import logging   # Use to log actions
+logger = logging.getLogger(__name__)
 
 
 # Create your views here.
@@ -65,8 +67,10 @@ class OwnersList(LoginRequiredMixin ,ListView):
         search_query = self.request.GET.get('search_query')
 
         if search_query:
-            queryset = queryset.filter(email__icontains=search_query)
-
+            logger.info(f"Term Searched -> {search_query}")
+            queryset = queryset.filter(first_name__icontains=search_query)
+        else:
+            logger.warning(f"Empty Term Search")
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -94,6 +98,25 @@ class PetsList(LoginRequiredMixin ,ListView):
     ordering = '-created_at' # Sorting results
 
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_query = self.request.GET.get('search_query')
+
+        if search_query:
+            logger.info(f"Term Searched -> {search_query}")
+            queryset = queryset.filter(name__icontains=search_query)
+        else:
+            logger.warning(f"Empty Term Search")
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = SearchForm(self.request.GET)
+        return context
+
+
+
 class PetsDetail(LoginRequiredMixin, DetailView):
     # Rendering template
 
@@ -108,6 +131,25 @@ class PetdatesList(LoginRequiredMixin, ListView):
     context_object_name = "petdates"
     paginate_by = 6
     ordering = '-created_at'
+
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_query = self.request.GET.get('search_query')
+
+        if search_query:
+            logger.info(f"Term Searched -> {search_query}")
+            queryset = queryset.filter(pet__name__icontains=search_query)
+        else:
+            logger.warning(f"Empty Term Search")
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = SearchForm(self.request.GET)
+        return context
+
 
 
 class PetdatesDetial(LoginRequiredMixin, DetailView):

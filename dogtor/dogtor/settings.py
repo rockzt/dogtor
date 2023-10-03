@@ -94,6 +94,50 @@ DATABASES = {
 }
 
 
+# Logging
+LOGGING = {
+    "version": 1,  # the dictConfig format version
+    "disable_existing_loggers": False,  # retain the default loggers
+    "handlers": {
+        "info_file": {
+            "class": "logging.FileHandler",
+            "filename": "general.log",
+            "level": "INFO",
+            "formatter": "verbose",  # applying formatter to logger
+        },
+        "warning_file": {
+            "class": "logging.FileHandler",
+            "filename": "warning.log",
+            "level": "WARNING",
+            "formatter": "verbose",  # applying formatter to logger
+        },
+    },
+    "loggers": {
+        "vet": {
+            "level": "WARNING",
+            "handlers": ["warning_file"],
+        },
+        "vet.views": {
+            "level": "INFO",
+            "handlers": ["info_file"],
+        },
+
+
+    },
+    #formmatters section
+    "formatters": {
+        "verbose": {
+            "format": "MODULE: {module} FILE: {name} LINE: {lineno}  {levelname}  {asctime}  {process:d} {thread:d} MESSAGE: {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
+}
+
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
