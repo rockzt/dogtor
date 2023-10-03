@@ -9,6 +9,15 @@
 {% endblock header %}
 
 {% block content %}
+<div class="mt-3 mb-3">
+  <form class="form-control" role="search" method="get">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-outline-success" type="submit">Search</button>
+  </form>
+</div>
+
+
 <div class="text-center mt-3 mb-3">
   <a href="{% url 'vet:petdates_create'%}" class="btn btn-primary"  role="button">Create Appointment</a>
 </div>
@@ -38,6 +47,6 @@
 </table>
   {% include "pagination.html" %}
 {% else  %}
-  <h1>DATA NOT FOUND</h1>
+  <h3>DATA NOT FOUND</h3>
 {% endif  %}
 {% endblock content %}

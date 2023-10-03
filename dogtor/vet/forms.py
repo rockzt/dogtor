@@ -45,7 +45,7 @@ class PetdateForm(forms.ModelForm):
 
 
 class SearchForm(forms.Form):
-    search_query = forms.CharField(max_length=100, required=False, label='Search')
+    search_query = forms.CharField(max_length=50, required=False, label='Search')
 
     def __init__(self, *args, **kwargs):
         super(SearchForm, self).__init__(*args, **kwargs)
@@ -54,5 +54,5 @@ class SearchForm(forms.Form):
         self.fields['search_query'].widget.attrs.update({
             'class': 'form-control me-2r',
             'type': 'search',
-            'placeholder': 'Enter an email...',
+            'placeholder': 'Enter a name...',
         })
