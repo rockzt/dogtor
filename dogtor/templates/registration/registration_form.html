@@ -13,23 +13,22 @@
 <body>
 <div class="container text-center mt-5 text-center">
     <h3>Welcome to Dogtor</h3>
-    <small>*You must log in first</small>
+    <small>You must sign up first</small>
     <hr>
     <br>
 <form method="POST">
     {% csrf_token %}
-  <!-- Email input -->
     {{ form.as_p }}
   <!-- 2 column grid layout for inline styling -->
   <div class="row mb-4">
     <div class="col">
       <!-- Simple link -->
-      <a href="/account/register">Register</a>
+      <a href="/accounts/login">Have an account?</a>
     </div>
   </div>
 
   <!-- Submit button -->
-  <button type="submit" class="btn btn-success btn-block mb-4">Log in</button>
+  <button type="submit" class="btn btn-success btn-block mb-4">Register</button>
 </form>
 </div>
 </body>
