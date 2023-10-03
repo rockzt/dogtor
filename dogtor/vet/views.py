@@ -10,7 +10,7 @@ from django.views.generic import (View,
                                   UpdateView,
                                   DeleteView
                                   ) # Importing TemplateView for generic class view
-from .forms import OwnerForm, PetForm, PetdateForm# Importing forms that will be used on views
+from .forms import OwnerForm, PetForm, PetdateForm, SearchForm# Importing forms that will be used on views
 from django.urls import reverse_lazy  # Importing to use reversed urls
 # Models
 from vet.models import PetOwner, Pet, PetDate
@@ -58,6 +58,21 @@ class OwnersList(LoginRequiredMixin ,ListView):
     context_object_name = "owners" # 3 Context
     paginate_by = 6  # Pagination parameter, how many records you want to show per page -> 1
     ordering = '-created_at'  # Sorting results
+
+    # Search bar functionality
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_query = self.request.GET.get('search_query')
+
+        if search_query:
+            queryset = queryset.filter(email__icontains=search_query)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = SearchForm(self.request.GET)
+        return context
 
 class OwnersDetail(LoginRequiredMixin ,DetailView):  # When inheriting from LoginRequiredMixin, you must be logged to access this view
     """Renders a specific Pet Owner with their pk"""
