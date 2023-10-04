@@ -18,6 +18,8 @@ from vet.models import PetOwner, Pet, PetDate
 from django.db.models import ProtectedError
 from django.shortcuts import render
 import logging   # Use to log actions
+from django.contrib.auth.models import Permission
+
 logger = logging.getLogger(__name__)
 
 
