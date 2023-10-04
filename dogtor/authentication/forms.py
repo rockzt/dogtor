@@ -96,7 +96,7 @@ class CustomUserCreationForm(forms.ModelForm):
     password_2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
     class Meta:
         model = User
-        fields = ('is_active', 'email', 'first_name', 'user_name', 'about' ,'password', 'password_2')
+        fields = ('email', 'first_name', 'user_name', 'about' ,'password', 'password_2')
 
     def clean(self):
         '''
@@ -113,6 +113,7 @@ class CustomUserCreationForm(forms.ModelForm):
         # Save the provided password in hashed format
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password"])
+        user.is_active = True # By default, user is not active, therefore overwriting this functionality to active user when creating
         if commit:
             user.save()
         return user
