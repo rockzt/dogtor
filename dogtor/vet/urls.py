@@ -16,7 +16,8 @@ from .views import (list_pet_owners,
                     PetdatesList,
                     PetdatesDetial,
                     PetdatesCreate,
-                    PetsdatesUpdate
+                    PetsdatesUpdate,
+                    GenerateCSVView
                     )
 
 # alias (reversed urls) -> app's urls in specific
@@ -42,5 +43,7 @@ urlpatterns = [
     path('petdates/<int:pk>', PetdatesDetial.as_view(), name="petdates_detail"), # Configuring generic class view, renders template
     path('petdates/add', PetdatesCreate.as_view(), name="petdates_create"), # Configuring CreateView of Petdates
     path('petdates/<int:pk>/edit', PetsdatesUpdate.as_view(), name="petdates_edit"), # Configuring CreateView of Petdates
+    # Simple Views
     path('test', Test.as_view()), # Configuring generic class view, this class does not render template
+    path('generate-csv/', GenerateCSVView.as_view(), name='generate_csv'),
 ]
