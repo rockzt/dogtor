@@ -18,7 +18,8 @@ from vet.models import PetOwner, Pet, PetDate
 from django.db.models import ProtectedError
 from django.shortcuts import render
 import logging   # Use to log actions
-from django.contrib.auth.models import Permission
+import csv
+from ast import literal_eval
 
 logger = logging.getLogger(__name__)
 
@@ -53,7 +54,16 @@ class OwnersList(TemplateView):
         return context
 '''
 
-class OwnersList(LoginRequiredMixin ,ListView):
+class OwnersList(LoginRequiredMixin ,ListView, PermissionRequiredMixin):
+
+
+    # Permissions Section
+    #permission_required = "vet.can_change_pet_date"  # app.how is it named on admin in the group section on permission assigned, just the user with this permission can access to this view
+    #raise_exception = True  # True -> Raise exception when you do not have permission
+    #login_url = "/accounts/login/"  # redirect url in case you are not logged, this urls redirect you to the log in admin panel
+    #redirect_field_name = "next"  # related to query param
+
+
     # 1.- Use model we want to use.
     # 2.- Pass template to render.
     # 3.- Pass the context with the data we want to manipulate.
@@ -75,10 +85,12 @@ class OwnersList(LoginRequiredMixin ,ListView):
             logger.warning(f"Empty Term Search")
         return queryset
 
+    # Passing context data (we are passing the search form)
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = SearchForm(self.request.GET)
         return context
+
 
 class OwnersDetail(LoginRequiredMixin ,DetailView):  # When inheriting from LoginRequiredMixin, you must be logged to access this view
     """Renders a specific Pet Owner with their pk"""
@@ -340,11 +352,44 @@ class PetsDelete(LoginRequiredMixin, DeleteView):
             return render(request, 'vet/pets/delete.html', {'error_message': error_message})
 
 
+
+                    # Simple Views Functionalities
 # Render text
 class Test(View):
     # Como función el método(GET,PATCH,POST.DELETE,PUT)
     def get(self, request):
         return HttpResponse("Hello there, from generic class view!!!")
+
+
+class GenerateCSVView(View):
+    def post(self, request, *args, **kwargs):
+        # Fetch all records from your model
+        model_dict = literal_eval(request.body.decode('utf-8'))
+        model_selected = model_dict.get('model_view')
+
+        model_set = None
+        if model_selected == 'PetOwner':
+            model_set = PetOwner.objects.all()
+
+        queryset = model_set
+
+        queryset = PetOwner.objects.all()
+        # Create a CSV response
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="all_data.csv"'
+
+        # Create a CSV writer and write data to the response
+        writer = csv.writer(response)
+
+        # Write header row (field names)
+        header = [field.name for field in PetOwner._meta.fields]
+        writer.writerow(header)
+
+        # Write data rows
+        for item in queryset:
+            writer.writerow([getattr(item, field) for field in header])
+
+        return response
 
 
 ''' 
