@@ -366,14 +366,11 @@ class GenerateCSVView(View):
         # Fetch all records from your model
         model_dict = literal_eval(request.body.decode('utf-8'))
         model_selected = model_dict.get('model_view')
-
-        model_set = None
-        if model_selected == 'PetOwner':
-            model_set = PetOwner.objects.all()
+        # Storing model data and fields for csv
+        model_set, header = get_model_and_fields(model_selected)
 
         queryset = model_set
 
-        queryset = PetOwner.objects.all()
         # Create a CSV response
         response = HttpResponse(content_type='text/csv')
         response['Content-Disposition'] = 'attachment; filename="all_data.csv"'
@@ -381,8 +378,7 @@ class GenerateCSVView(View):
         # Create a CSV writer and write data to the response
         writer = csv.writer(response)
 
-        # Write header row (field names)
-        header = [field.name for field in PetOwner._meta.fields]
+        # Write header row (field names) using header variable
         writer.writerow(header)
 
         # Write data rows
@@ -449,4 +445,21 @@ def error_403(request, exception):
     return render(request, 'vet/403.html')
 
 
-# Permission Check
+# Helpers
+def get_model_and_fields(model_selected):
+    model_set = None
+    header = None
+    if model_selected == 'PetOwner':
+        model_set = PetOwner.objects.all()
+        # Creating Header for PetOwner  Model
+        header = [field.name for field in PetOwner._meta.fields]
+    elif model_selected == 'Pet':
+        model_set = Pet.objects.all()
+        # Creating Header for Pet  Model
+        header = [field.name for field in Pet._meta.fields]
+    elif model_selected == 'PetDate':
+        model_set = PetDate.objects.all()
+        # Creating Header for Pet  Model
+        header = [field.name for field in PetDate._meta.fields]
+
+    return model_set, header

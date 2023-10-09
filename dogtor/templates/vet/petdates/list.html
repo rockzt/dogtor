@@ -22,6 +22,9 @@
   <a href="{% url 'vet:petdates_create'%}" class="btn btn-primary"  role="button">Create Appointment</a>
 </div>
 <br>
+<div class="mt-5 mb-3">
+  <button id="download-csv-button" class="btn btn-success mb-2">Download CSV</button>
+</div>
 {% if petdates %}
 <table class="table table-hover text-center">
   <tr>
@@ -50,3 +53,50 @@
   <h3>DATA NOT FOUND</h3>
 {% endif  %}
 {% endblock content %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Get a reference to the download button
+    const downloadButton = document.getElementById('download-csv-button');
+    const csrfToken = document.querySelector('input[name=csrfmiddlewaretoken]').value;
+    // Add a click event listener to the button
+    downloadButton.addEventListener('click', function () {
+        // Create a data object to send as JSON in the POST request
+        const postData = {
+            // Define your data here
+          "model_view" : "PetDate"
+        };
+
+        // Make a POST request to the Django view that generates the CSV
+        fetch('{% url 'vet:generate_csv' %}',
+              {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken,
+            },
+            body: JSON.stringify(postData), // Convert data to JSON format
+        })
+        .then(response => response.blob()) // Convert the response to a Blob
+        .then(blob => {
+            // Create a temporary URL for the Blob
+            const url = window.URL.createObjectURL(blob);
+
+            // Create a link element and trigger the download
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'your_data.csv';  // Set the desired file name
+            document.body.appendChild(a);
+            a.click();
+
+            // Clean up resources
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
+</script>
+{% endblock scripts %}

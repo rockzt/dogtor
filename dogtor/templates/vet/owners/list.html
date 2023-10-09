@@ -25,7 +25,6 @@
   <button id="download-csv-button" class="btn btn-success mb-2">Download CSV</button>
 <table class="table table-hover text-center">
   <tr>
-    <th>Select</th>
     <th># Owner</th>
     <th>First Name</th>
     <th>Email</th>
@@ -35,9 +34,6 @@
   <tr>
     <!--attribute href - url where we want to go-->
     <!--reversed_app_url:reversed_singular_url-->
-    <td rowspan="1" height="33" width="33">
-      {{ form.as_p }}
-    </td>
     <td>  <a href="{% url 'vet:owners_detail' pk=owner.id %}">{{ owner.id }}</a> </td>
     <td>{{ owner.first_name }}</td>
     <td>{{ owner.email }}</td>

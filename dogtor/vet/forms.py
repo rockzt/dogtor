@@ -56,16 +56,3 @@ class SearchForm(forms.Form):
             'type': 'search',
             'placeholder': 'Enter a name...',
         })
-
-class BatchListForm(forms.Form):
-    # choices = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,)
-    choices = forms.MultipleChoiceField(required=True, label='csv')
-
-    def __init__(self, *args, **kwargs):
-        super(BatchListForm, self).__init__(*args, **kwargs)
-
-        # Add attributes to the search_query field
-        self.fields['choices'].widget.attrs.update({
-            'class': 'form-control',
-            'type': 'checkbox'
-        })
