@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-33mbx)g#^pk=5n@!ntp1k80trix1_b3hv)_*q!r91*rs4qfmy9'
+SECRET_KEY = "django-insecure-33mbx)g#^pk=5n@!ntp1k80trix1_b3hv)_*q!r91*rs4qfmy9"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True  # Set on false when creating customized error pages
@@ -35,53 +35,53 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'jazzmin',  # Custom Theme for admin panel
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'bootstrap5',
-    'authentication',
-    'vet',
-    'blog',
-    'rest_framework',  # rest framework
-    'api'  # Our api APP
+    "jazzmin",  # Custom Theme for admin panel
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "bootstrap5",
+    "authentication",
+    "vet",
+    "blog",
+    "rest_framework",  # rest framework
+    "api",  # Our api APP
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django_auto_logout.middleware.auto_logout',  # Importing auto log out package
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django_auto_logout.middleware.auto_logout",  # Importing auto log out package
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'dogtor.urls'
+ROOT_URLCONF = "dogtor.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates/")],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [os.path.join(BASE_DIR, "templates/")],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
                 # Context processor related to auto log out after no activity
-                'django_auto_logout.context_processors.auto_logout_client',
+                "django_auto_logout.context_processors.auto_logout_client",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'dogtor.wsgi.application'
+WSGI_APPLICATION = "dogtor.wsgi.application"
 
 
 # Database
@@ -126,8 +126,6 @@ LOGGING = {
             "level": "INFO",
             "handlers": ["info_file"],
         },
-
-
     },
     # formmatters section
     "formatters": {
@@ -148,16 +146,16 @@ LOGGING = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -165,9 +163,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -176,33 +174,33 @@ USE_TZ = True
 
 # Log out After no activity values
 AUTO_LOGOUT = {
-    'IDLE_TIME': timedelta(minutes=180),
-    'MESSAGE': 'The session has expired. Please login again to continue.',
-    'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
+    "IDLE_TIME": timedelta(minutes=180),
+    "MESSAGE": "The session has expired. Please login again to continue.",
+    "REDIRECT_TO_LOGIN_IMMEDIATELY": True,
 }
 
 
 # Redirect´s URL  login/logout
-LOGIN_REDIRECT_URL = '/vet/'
-LOGOUT_REDIRECT_URL = '/vet/'
+LOGIN_REDIRECT_URL = "/vet/"
+LOGOUT_REDIRECT_URL = "/vet/"
 
 # AUTH_USER we are going to use
-AUTH_USER_MODEL = 'authentication.ModUser'
+AUTH_USER_MODEL = "authentication.ModUser"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # EMAIL SENDER CONFIGURATION
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'xabc6457@gmail.com'  # sender's email-id
-EMAIL_HOST_PASSWORD = 'xyz123abc@'  # password associated with above email-id
+EMAIL_HOST_USER = "xabc6457@gmail.com"  # sender's email-id
+EMAIL_HOST_PASSWORD = "xyz123abc@"  # password associated with above email-id
