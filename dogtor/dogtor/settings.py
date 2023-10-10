@@ -16,7 +16,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -28,7 +27,6 @@ DEBUG = True  # Set on false when creating customized error pages
 
 # Set '*' when DEBUG = False to make it work with customized error pages
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -81,7 +79,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "dogtor.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -95,7 +92,6 @@ DATABASES = {
         "PORT": "5432",
     }
 }
-
 
 # Logging
 LOGGING = {
@@ -128,7 +124,8 @@ LOGGING = {
     # formmatters section
     "formatters": {
         "verbose": {
-            "format": "MODULE: {module} FILE: {name} LINE: {lineno}  {levelname}  {asctime}  {process:d} {thread:d} MESSAGE: {message}",
+            "format":
+            "MODULE: {module} FILE: {name} LINE: {lineno}  {levelname}  {asctime}  {process:d} {thread:d} MESSAGE: {message}",
             "style": "{",
         },
         "simple": {
@@ -138,25 +135,27 @@ LOGGING = {
     },
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME":
+        "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -169,14 +168,12 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Log out After no activity values
 AUTO_LOGOUT = {
     "IDLE_TIME": timedelta(minutes=180),
     "MESSAGE": "The session has expired. Please login again to continue.",
     "REDIRECT_TO_LOGIN_IMMEDIATELY": True,
 }
-
 
 # Redirect´s URL  login/logout
 LOGIN_REDIRECT_URL = "/vet/"
