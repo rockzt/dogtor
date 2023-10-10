@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django_auto_logout.middleware.auto_logout',  # Importing auto log out package
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
@@ -71,6 +72,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # Context processor related to auto log out after no activity
+                'django_auto_logout.context_processors.auto_logout_client',
             ],
         },
     },
@@ -169,12 +172,23 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Redirect's URL to login
+# Log out After no activity values
+from datetime import timedelta
+AUTO_LOGOUT = {
+    'IDLE_TIME': timedelta(minutes=180),
+    'MESSAGE': 'The session has expired. Please login again to continue.',
+    'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
+}
+
+
+
+
+
+# Redirect´s URL  login/logout
 LOGIN_REDIRECT_URL = '/vet/'
 LOGOUT_REDIRECT_URL = '/vet/'
 
 # AUTH_USER we are going to use
-
 AUTH_USER_MODEL = 'authentication.ModUser'
 
 # Static files (CSS, JavaScript, Images)
