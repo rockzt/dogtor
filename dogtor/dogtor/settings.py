@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 import os
 
@@ -25,9 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-33mbx)g#^pk=5n@!ntp1k80trix1_b3hv)_*q!r91*rs4qfmy9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True  #Set on false when creating customized error pages
+DEBUG = True  # Set on false when creating customized error pages
 
-ALLOWED_HOSTS = []   # Set '*' when DEBUG = False to make it work with customized error pages
+# Set '*' when DEBUG = False to make it work with customized error pages
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -44,7 +46,7 @@ INSTALLED_APPS = [
     'authentication',
     'vet',
     'blog',
-    'rest_framework', # rest framework
+    'rest_framework',  # rest framework
     'api'  # Our api APP
 ]
 
@@ -89,8 +91,8 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": "dogtor",
-        #"USER": "postgres",
-        #"PASSWORD": "postgres",
+        # "USER": "postgres",
+        # "PASSWORD": "postgres",
         "HOST": "localhost",
         "PORT": "5432",
     }
@@ -127,7 +129,7 @@ LOGGING = {
 
 
     },
-    #formmatters section
+    # formmatters section
     "formatters": {
         "verbose": {
             "format": "MODULE: {module} FILE: {name} LINE: {lineno}  {levelname}  {asctime}  {process:d} {thread:d} MESSAGE: {message}",
@@ -173,15 +175,11 @@ USE_TZ = True
 
 
 # Log out After no activity values
-from datetime import timedelta
 AUTO_LOGOUT = {
     'IDLE_TIME': timedelta(minutes=180),
     'MESSAGE': 'The session has expired. Please login again to continue.',
     'REDIRECT_TO_LOGIN_IMMEDIATELY': True,
 }
-
-
-
 
 
 # Redirect´s URL  login/logout
@@ -206,5 +204,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'xabc6457@gmail.com'#sender's email-id
-EMAIL_HOST_PASSWORD = 'xyz123abc@' #password associated with above email-id
+EMAIL_HOST_USER = 'xabc6457@gmail.com'  # sender's email-id
+EMAIL_HOST_PASSWORD = 'xyz123abc@'  # password associated with above email-id
