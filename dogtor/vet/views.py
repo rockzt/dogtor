@@ -321,12 +321,7 @@ class OwnersDelete(LoginRequiredMixin, DeleteView):
         except ProtectedError as e:
             # Customize the error message
             error_message = f"Cannot delete owner, has at least one pet related. ({e})"
-            res = str(e).split(', ')
-            pet_pk_str = res[3].replace('>', '').replace('}', '').replace(')', '')
-            pk_user = kwargs['pk']
-            pet_pk = int(pet_pk_str)
-            owner_error = PetOwner.objects.get(pk=pk_user)
-            return render(request, 'vet/owners/delete.html', {'error_message': error_message, 'owner_error': owner_error, 'pet_pk' : pet_pk})
+            return render(request, 'vet/owners/delete.html', {'error_message': error_message})
 
 
 class PetsDelete(LoginRequiredMixin, DeleteView):

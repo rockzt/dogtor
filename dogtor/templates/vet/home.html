@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "../base.html" %}
 
 
 {% block title %}
@@ -8,11 +8,16 @@
 {% block header %}
 <h1>General View</h1>
 {% endblock header %}
-
 {% block content %}
 <div class="row mt-2 mb-4">
+  <!--Clock Section-->
+  <div class="wrapper_clock">
+    <div class="clock_container">
+    </div>
+ </div>
+
   <div class="col-12 mb-3 text-start">
-  <h3>Last Records Created</h3>
+    <h3>Last Records Created</h3>
   </div>
   <div class="col-4 text-center">
     <div class="alert alert-primary" role="alert">
@@ -65,10 +70,7 @@
     </div>
   </div>
 </div>
-
 </div>
-
-
 {% endblock content %}
 
 {% block scripts %}
@@ -111,9 +113,63 @@ document. addEventListener("DOMContentLoaded", function(){
             }
 });
     });
+
+
+/*Clock Functionality*/
+let clock_container = document.querySelector(".clock_container");
+function digitalclock(){
+    let date=new Date();
+    let hours=date.getHours();
+    let minutes=date.getMinutes();
+    let seconds=date.getSeconds();
+    let txt="AM";
+    if(hours>12){
+        hours=hours-12;
+        txt="PM";
+    }
+    else if(hours==0){
+        hours=12;
+        txt="AM";
+    }
+
+    hours=hours<10?'0'+hours:hours;
+    minutes=minutes<10?'0'+minutes:minutes;
+    seconds=seconds<10?'0'+seconds:seconds;
+
+    clock_container.innerHTML=`${hours} : ${minutes} : ${seconds} ${txt}`;
+ }
+digitalclock();
+setInterval(digitalclock,1000);
 </script>
 {% endblock scripts %}
 
 
 {% block style %}
+<style>
+/*Clock Styles*/
+.wrapper_clock{
+    max-width: 100%;
+    height:auto;
+    display:grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(auto,100px);
+    justify-items: center;
+    align-items: center;
+}
+
+.clock_container{
+   max-width: 100%;
+   height:100px;
+   padding-left: 30px;
+   padding-right: 30px;
+   color:#2d3436;
+   font-family: 'Orbitron', sans-serif;
+   font-size: 1.45rem;
+   font-weight: 200;
+   background-color: #0dcaf0;
+   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+   text-align: center;
+   line-height:100px;
+}
+</style>
 {% endblock style %}

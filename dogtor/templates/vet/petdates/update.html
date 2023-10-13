@@ -16,20 +16,25 @@
     <button type="submit">Update</button>
 </form>-->
 
-<div class="card-body">
-    <h5>Update Appointment</h5>
-    <form method="POST">
-        {% csrf_token %}
-        {{form.as_p}}  <!--loading form-->
+<div class="row row-cols-1 row-cols-md-2 g-4 d-flex justify-content-center">
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">Update Appointments</h5>
+        <p class="card-text">
+          <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}  <!--loading form-->
+            <button type="submit" class="btn btn-success">Update</button>
+          </form>
+        </p>
+      </div>
+      <div class="card-footer">
         <a type="button" class="btn btn-danger" href="{% url 'vet:petdates_list' %}">Cancel</a>
-        <button type="submit" class="btn btn-success">Update</button>
-    </form>
+      </div>
+    </div>
+  </div>
 </div>
+
+
 {% endblock content %}
-<script>
-  $(function () {
-    $("#datetimepicker1").datetimepicker({
-      format: 'DD/MM/YYYY HH:mm',
-    });
-  });
-</script>

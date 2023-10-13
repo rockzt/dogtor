@@ -14,11 +14,58 @@ class OwnerForm(forms.ModelForm):
     class Meta:
         model = PetOwner # 1
         fields = ["first_name", "last_name", "address", "email", "phone"]
+        widgets = {
+            'first_name': forms.TextInput(
+                attrs={
+                    'type': 'text',
+                    'class': 'form-control',
+                }),
+            'last_name': forms.TextInput(
+                attrs={
+                    'type': 'text',
+                    'class': 'form-control',
+                }),
+            'address': forms.TextInput(
+                attrs={
+                    'class': 'form-control',
+                    'type': 'text',
+                }),
+            'email': forms.EmailInput(
+                attrs={
+                    'class': 'form-control',
+                    'type': 'email',
+                }),
+            'phone': forms.NumberInput(
+                attrs={
+                    'class': 'form-control',
+                    'type': 'number',
+                }),
+        }
+
+
+
 
 class PetForm(forms.ModelForm):
     class Meta:
         model = Pet
         fields = ["name", "type", "owner"]
+        widgets = {
+            'name': forms.TextInput(
+                attrs={
+                    'type': 'text',
+                    'class': 'form-control',
+                }),
+            'type': forms.TextInput(
+                attrs={
+                    'type': 'text',
+                    'class': 'form-control',
+                }),
+            'owner': forms.Select(
+                attrs={
+                    'class': 'form-control',
+                    'type': 'text',
+                }),
+        }
 
 
 class PetdateForm(forms.ModelForm):

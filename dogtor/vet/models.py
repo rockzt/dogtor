@@ -57,7 +57,7 @@ class PetDate(models.Model):
     pet = models.ForeignKey(Pet, on_delete=models.PROTECT, related_name="dates")
 
     def __str__(self):
-        return f"{self.datetime}, {self.pet.name}, {self.type}"
+        return f"{self.datetime.strftime('%Y-%m-%d')}, {self.pet.name}, {self.type}"
 
 
 """

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import UserCreationForm  # Registration Form Fornt End
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import UserCreationForm    # Registration Form Front End
+from django.contrib.auth.forms import ReadOnlyPasswordHashField, AuthenticationForm
 
 User = get_user_model()
 
@@ -92,11 +92,43 @@ class UserAdminChangeForm(forms.ModelForm):
 
 # User Creation Form - Front End
 class CustomUserCreationForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
-    password_2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput)
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={
+                'type': 'password',
+                'class': 'form-control',
+              }))
+
+    password_2 = forms.CharField(label='Confirm Password', widget=forms.PasswordInput(
+        attrs={
+                'type': 'password',
+                'class': 'form-control',
+              }))
     class Meta:
         model = User
         fields = ('email', 'first_name', 'user_name', 'about' ,'password', 'password_2')
+        widgets = {
+            'email': forms.EmailInput(
+                attrs={
+                    'type': 'email',
+                    'class': 'form-control',
+                }),
+            'first_name': forms.TextInput(
+                attrs={
+                    'type': 'text',
+                    'class': 'form-control',
+                }),
+            'user_name': forms.TextInput(
+                attrs={
+                    'type': 'email',
+                    'class': 'form-control',
+                }),
+            'about': forms.Textarea(
+                attrs={
+                    'type': 'text',
+                    'class': 'form-control',
+                    'rows': '8'
+                }),
+        }
 
     def clean(self):
         '''

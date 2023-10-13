@@ -186,7 +186,7 @@ AUTO_LOGOUT = {
 
 # Redirect´s URL  login/logout
 LOGIN_REDIRECT_URL = '/vet/'
-LOGOUT_REDIRECT_URL = '/vet/'
+LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 # AUTH_USER we are going to use
 AUTH_USER_MODEL = 'authentication.ModUser'
