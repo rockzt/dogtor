@@ -55,7 +55,7 @@ class PetForm(forms.ModelForm):
                     'type': 'text',
                     'class': 'form-control',
                 }),
-            'type': forms.TextInput(
+            'type': forms.Select(
                 attrs={
                     'type': 'text',
                     'class': 'form-control',
@@ -77,16 +77,18 @@ class PetdateForm(forms.ModelForm):
         widgets = {
             'datetime': forms.DateTimeInput(
                 attrs={
-                    'type': 'datetime-local',
                     'class': 'form-control',
+                    'type': 'datetime-local',
                 }),
             'type': forms.Select(
                 attrs={
                     'class': 'form-control',
+                    'type': 'text',
                 }),
             'pet': forms.Select(
                 attrs={
                     'class': 'form-control',
+                    'type': 'text',
                 }),
         }
 

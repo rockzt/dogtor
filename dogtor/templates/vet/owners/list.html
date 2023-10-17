@@ -21,37 +21,53 @@
   <a href="{% url 'vet:owners_create'%}" class="btn btn-primary"  role="button">Create Owner</a>
 </div>
 <br>
-<div class="mt-5">
-  <button id="download-csv-button" class="btn btn-success mb-2">Download CSV</button>
-<table class="table table-hover text-center">
-  <tr>
-    <th># Owner</th>
-    <th>First Name</th>
-    <th>Email</th>
-    <th>Action</th>
-  </tr>
-  {% for owner in owners %}
-  <tr>
-    <!--attribute href - url where we want to go-->
-    <!--reversed_app_url:reversed_singular_url-->
-    <td>  <a href="{% url 'vet:owners_detail' pk=owner.id %}">{{ owner.id }}</a> </td>
-    <td>{{ owner.first_name }}</td>
-    <td>{{ owner.email }}</td>
-    <td>
-        <a href="{% url 'vet:owners_detail' pk=owner.id %}" class="btn btn-link"  role="button">View</a>
-        <a href="{% url 'vet:owners_edit' pk=owner.id %}" class="btn btn-warning"  role="button">Modify</a>
-        <a href="{% url 'vet:owners_delete' pk=owner.id %}" class="btn btn-danger"  role="button">DELETE</a>
-    </td>
-  </tr>
-  {% empty %}
-  <tr class="table-danger">
-    <td>WARNING:</td>
-    <td>Not</td>
-    <td>Owners</td>
-    <td>Found!!.</td>
-  </tr>
-  {% endfor %}
-</table>
+<div class="mt-2">
+  <button id="download-csv-button" class="btn btn-success mb-4">Download CSV</button>
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="card shadow-2-strong" style="background-color: #f5f7fa;">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-borderless mb-0">
+                    <thead>
+                      <tr>
+                        <th scope="col"># OWNER</th>
+                        <th scope="col">FIRST NAME</th>
+                        <th scope="col">EMAIL</th>
+                        <th scope="col">ACTIONS</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for owner in owners %}
+                      <tr>
+                      <!--attribute href - url where we want to go-->
+                      <!--reversed_app_url:reversed_singular_url-->
+                        <td>  <a href="{% url 'vet:owners_detail' pk=owner.id %}">{{ owner.id }}</a> </td>
+                        <td>{{ owner.first_name }}</td>
+                        <td>{{ owner.email }}</td>
+                        <td>
+                          <a href="{% url 'vet:owners_edit' pk=owner.id %}" class="btn btn-warning"  role="button">Modify</a>
+                          <a href="{% url 'vet:owners_delete' pk=owner.id %}" class="btn btn-danger"  role="button">DELETE</a>
+                        </td>
+                      </tr>
+                    {% empty %}
+                      <tr class="table-danger">
+                        <td>WARNING:</td>
+                        <td>Not</td>
+                        <td>Owners</td>
+                        <td>Found!!.</td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
   {% include "pagination.html" %}
 </div>
 {% endblock content %}
@@ -102,3 +118,26 @@
 });
 </script>
 {% endblock scripts %}
+{% block style %}
+<style>
+table td,
+table th {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.card {
+  border-radius: .5rem;
+}
+
+.mask-custom {
+  background: rgba(24, 24, 16, .2);
+  border-radius: 2em;
+  backdrop-filter: blur(25px);
+  border: 2px solid rgba(255, 255, 255, 0.05);
+  background-clip: padding-box;
+  box-shadow: 10px 10px 10px rgba(46, 54, 68, 0.03);
+}
+</style>
+{% endblock style %}
