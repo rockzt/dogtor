@@ -8,10 +8,12 @@ from .models import Pet, PetDate, PetOwner
 
 
 class OwnerForm(forms.ModelForm):
+    """ """
     # 1.- Model relate to current form
     # 2.- Fields presented on the current form
 
     class Meta:
+        """ """
         model = PetOwner  # 1
         fields = ["first_name", "last_name", "address", "email", "phone"]
         widgets = {
@@ -49,7 +51,9 @@ class OwnerForm(forms.ModelForm):
 
 
 class PetForm(forms.ModelForm):
+    """ """
     class Meta:
+        """ """
         model = Pet
         fields = ["name", "type", "owner"]
         widgets = {
@@ -75,7 +79,9 @@ class PetForm(forms.ModelForm):
 
 
 class PetdateForm(forms.ModelForm):
+    """ """
     class Meta:
+        """ """
         model = PetDate
         fields = ["datetime", "type", "pet"]
         widgets = {
@@ -101,6 +107,7 @@ class PetdateForm(forms.ModelForm):
 
 
 class SearchForm(forms.Form):
+    """ """
     search_query = forms.CharField(max_length=50, required=False, label="Search")
 
     def __init__(self, *args, **kwargs):
