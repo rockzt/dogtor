@@ -15,31 +15,36 @@ class OwnerForm(forms.ModelForm):
         model = PetOwner  # 1
         fields = ["first_name", "last_name", "address", "email", "phone"]
         widgets = {
-            'first_name': forms.TextInput(
+            "first_name": forms.TextInput(
                 attrs={
-                    'type': 'text',
-                    'class': 'form-control',
-                }),
-            'last_name': forms.TextInput(
+                    "type": "text",
+                    "class": "form-control",
+                }
+            ),
+            "last_name": forms.TextInput(
                 attrs={
-                    'type': 'text',
-                    'class': 'form-control',
-                }),
-            'address': forms.TextInput(
+                    "type": "text",
+                    "class": "form-control",
+                }
+            ),
+            "address": forms.TextInput(
                 attrs={
-                    'class': 'form-control',
-                    'type': 'text',
-                }),
-            'email': forms.EmailInput(
+                    "class": "form-control",
+                    "type": "text",
+                }
+            ),
+            "email": forms.EmailInput(
                 attrs={
-                    'class': 'form-control',
-                    'type': 'email',
-                }),
-            'phone': forms.NumberInput(
+                    "class": "form-control",
+                    "type": "email",
+                }
+            ),
+            "phone": forms.NumberInput(
                 attrs={
-                    'class': 'form-control',
-                    'type': 'number',
-                }),
+                    "class": "form-control",
+                    "type": "number",
+                }
+            ),
         }
 
 
@@ -48,58 +53,64 @@ class PetForm(forms.ModelForm):
         model = Pet
         fields = ["name", "type", "owner"]
         widgets = {
-            'name': forms.TextInput(
+            "name": forms.TextInput(
                 attrs={
-                    'type': 'text',
-                    'class': 'form-control',
-                }),
-            'type': forms.Select(
+                    "type": "text",
+                    "class": "form-control",
+                }
+            ),
+            "type": forms.Select(
                 attrs={
-                    'type': 'text',
-                    'class': 'form-control',
-                }),
-            'owner': forms.Select(
+                    "type": "text",
+                    "class": "form-control",
+                }
+            ),
+            "owner": forms.Select(
                 attrs={
-                    'class': 'form-control',
-                    'type': 'text',
-                }),
+                    "class": "form-control",
+                    "type": "text",
+                }
+            ),
         }
 
 
 class PetdateForm(forms.ModelForm):
-
     class Meta:
         model = PetDate
         fields = ["datetime", "type", "pet"]
         widgets = {
-            'datetime': forms.DateTimeInput(
+            "datetime": forms.DateTimeInput(
                 attrs={
-                    'class': 'form-control',
-                    'type': 'datetime-local',
-                }),
-            'type': forms.Select(
+                    "class": "form-control",
+                    "type": "datetime-local",
+                }
+            ),
+            "type": forms.Select(
                 attrs={
-                    'class': 'form-control',
-                    'type': 'text',
-                }),
-            'pet': forms.Select(
+                    "class": "form-control",
+                    "type": "text",
+                }
+            ),
+            "pet": forms.Select(
                 attrs={
-                    'class': 'form-control',
-                    'type': 'text',
-                }),
+                    "class": "form-control",
+                    "type": "text",
+                }
+            ),
         }
 
 
 class SearchForm(forms.Form):
-    search_query = forms.CharField(
-        max_length=50, required=False, label='Search')
+    search_query = forms.CharField(max_length=50, required=False, label="Search")
 
     def __init__(self, *args, **kwargs):
         super(SearchForm, self).__init__(*args, **kwargs)
 
         # Add attributes to the search_query field
-        self.fields['search_query'].widget.attrs.update({
-            'class': 'form-control me-2r',
-            'type': 'search',
-            'placeholder': 'Enter a name...',
-        })
+        self.fields["search_query"].widget.attrs.update(
+            {
+                "class": "form-control me-2r",
+                "type": "search",
+                "placeholder": "Enter a name...",
+            }
+        )
