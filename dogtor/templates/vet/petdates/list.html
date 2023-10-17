@@ -22,37 +22,59 @@
   <a href="{% url 'vet:petdates_create'%}" class="btn btn-primary"  role="button">Create Appointment</a>
 </div>
 <br>
-<div class="mt-5 mb-3">
+<div class="mt-2">
   <button id="download-csv-button" class="btn btn-success mb-2">Download CSV</button>
 </div>
-{% if petdates %}
-<table class="table table-hover text-center">
-  <tr>
-    <th>#Appointment</th>
-    <th>Appointment Date</th>
-    <th>Procedure</th>
-    <th>Pet's Name</th>
-    <th>Actions</th>
-  </tr>
-    {% for petdate in petdates %}
-    <tr>
-      <td>  <a href="{% url 'vet:petdates_detail' pk=petdate.id %}">{{ petdate.id }}</a> </td>
-      <td>{{ petdate.datetime }}</td>
-      <td>{{ petdate.type }}</td>
-      <td>{{ petdate.pet.name }}</td>
-      <td>
-          <a href="{% url 'vet:petdates_detail' pk=petdate.id %}" class="btn btn-link"  role="button">View</a>
-          <a href="{% url 'vet:petdates_edit' pk=petdate.id %}" class="btn btn-warning"  role="button" >Modify</a>
-          <a href="{% url 'vet:pets_delete' pk=petdate.id %}" class="btn btn-danger disabled"  role="button">DELETE</a>
-      </td>
-    </tr>
-    {% endfor %}
-</table>
-  {% include "pagination.html" %}
-{% else  %}
-  <h3>DATA NOT FOUND</h3>
-{% endif  %}
+
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="card shadow-2-strong" style="background-color: #f5f7fa;">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-borderless mb-0">
+                    <thead>
+                      <tr>
+                        <th scope="col"># APPOINTMENT</th>
+                        <th scope="col">APPOINTMENT DATE</th>
+                        <th scope="col">PROCEDURE</th>
+                        <th scope="col">PET'S NAME</th>
+                        <th scope="col">ACTIONS</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for petdate in petdates %}
+                      <tr>
+                        <td>  <a href="{% url 'vet:petdates_detail' pk=petdate.id %}">{{ petdate.id }}</a> </td>
+                        <td>{{ petdate.datetime }}</td>
+                        <td>{{ petdate.type }}</td>
+                        <td>{{ petdate.pet.name }}</td>
+                        <td>
+                          <a href="{% url 'vet:petdates_edit' pk=petdate.id %}" class="btn btn-warning"  role="button" >Modify</a>
+                          <a href="{% url 'vet:pets_delete' pk=petdate.id %}" class="btn btn-danger disabled"  role="button">DELETE</a>
+                        </td>
+                      </tr>
+                    {% empty %}
+                      <tr class="table-danger">
+                        <td>WARNING:</td>
+                        <td>Not</td>
+                        <td>Petdates</td>
+                        <td>Found</td>
+                        <td>!!.</td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
 {% endblock content %}
+
+
 
 {% block scripts %}
 <script>

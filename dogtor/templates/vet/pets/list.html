@@ -22,36 +22,63 @@
   <a href="{% url 'vet:pets_create'%}" class="btn btn-primary"  role="button">Create Pet</a>
 </div>
 <br>
-<div class="mt-5 mb-3">
-  <button id="download-csv-button" class="btn btn-success mb-2">Download CSV</button>
+<div class="mt-2">
+  <button id="download-csv-button" class="btn btn-success mb-4">Download CSV</button>
 </div>
-{% if pets %}
-<table class="table table-hover text-center">
-  <tr>
-    <th>#Pet</th>
-    <th>Name</th>
-    <th>Type</th>
-    <th>Owner</th>
-    <th>Actions</th>
-  </tr>
-    {% for pet in pets %}
-    <tr>
-      <td>  <a href="{% url 'vet:pets_detail' pk=pet.id %}">{{ pet.id }}</a> </td>
-      <td>{{ pet.name }}</td>
-      <td>{{ pet.type }}</td>
-      <td>{{ pet.owner }}</td>
-      <td>
-          <a href="{% url 'vet:pets_detail' pk=pet.id %}" class="btn btn-link"  role="button">View</a>
-          <a href="{% url 'vet:pets_edit' pk=pet.id %}" class="btn btn-warning"  role="button">Modify</a>
-          <a href="{% url 'vet:pets_delete' pk=pet.id %}" class="btn btn-danger"  role="button">DELETE</a>
-      </td>
-    </tr>
-    {% endfor %}
-</table>
+
+      <div class="container-fluid">
+        <div class="row justify-content-center">
+          <div class="col-12">
+            <div class="card shadow-2-strong" style="background-color: #f5f7fa;">
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-borderless mb-0">
+                    <thead>
+                      <tr>
+                        <th scope="col"># PET</th>
+                        <th scope="col">NAME</th>
+                        <th scope="col">TYPE</th>
+                        <th scope="col">OWNER</th>
+                        <th scope="col">ACTIONS</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for pet in pets %}
+                      <tr>
+                        <td>  <a href="{% url 'vet:pets_detail' pk=pet.id %}">{{ pet.id }}</a> </td>
+                        <td>{{ pet.name }}</td>
+                        <td>{{ pet.type }}</td>
+                        <td>{{ pet.owner }}</td>
+                        <td>
+                          <a href="{% url 'vet:pets_edit' pk=pet.id %}" class="btn btn-warning"  role="button">Modify</a>
+                          <a href="{% url 'vet:pets_delete' pk=pet.id %}" class="btn btn-danger"  role="button">DELETE</a>
+                        </td>
+                      </tr>
+                    {% empty %}
+                      <tr class="table-danger">
+                        <td>WARNING:</td>
+                        <td>Not</td>
+                        <td>Pets</td>
+                        <td>Found</td>
+                        <td>!!.</td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
   {% include "pagination.html" %}
-{% else  %}
-  <h3>DATA NOT FOUND</h3>
-{% endif  %}
+
+
+
+
+
+
+
 {% endblock content %}
 
 {% block scripts %}
