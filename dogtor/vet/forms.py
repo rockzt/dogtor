@@ -1,7 +1,7 @@
 from django import forms
 
 # Importing models
-from .models import PetOwner, Pet, PetDate
+from .models import Pet, PetDate, PetOwner
 
 # Link forms with models
 # Forms -> Classes
