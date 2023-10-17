@@ -12,7 +12,7 @@ class OwnerForm(forms.ModelForm):
     # 2.- Fields presented on the current form
 
     class Meta:
-        model = PetOwner # 1
+        model = PetOwner  # 1
         fields = ["first_name", "last_name", "address", "email", "phone"]
         widgets = {
             'first_name': forms.TextInput(
@@ -43,8 +43,6 @@ class OwnerForm(forms.ModelForm):
         }
 
 
-
-
 class PetForm(forms.ModelForm):
     class Meta:
         model = Pet
@@ -70,7 +68,6 @@ class PetForm(forms.ModelForm):
 
 class PetdateForm(forms.ModelForm):
 
-
     class Meta:
         model = PetDate
         fields = ["datetime", "type", "pet"]
@@ -94,7 +91,8 @@ class PetdateForm(forms.ModelForm):
 
 
 class SearchForm(forms.Form):
-    search_query = forms.CharField(max_length=50, required=False, label='Search')
+    search_query = forms.CharField(
+        max_length=50, required=False, label='Search')
 
     def __init__(self, *args, **kwargs):
         super(SearchForm, self).__init__(*args, **kwargs)
