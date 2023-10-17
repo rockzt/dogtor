@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Edit Profile Info</title>
+{% endblock title %}
+
+
+{% block header %}
+<h1>Edit Profile Info</h1>
+{% endblock header %}
+
+{% block content %}
+<div class="container text-center mt-5 mb-5 text-center">
+
+<div class="row row-cols-1 row-cols-md-2 g-4 d-flex justify-content-center">
+  <div class="col">
+    <div class="card h-100">
+      <div class="card-body">
+        <h5 class="card-title">User Info</h5>
+          <br>
+        <div class="card-text container-fluid">
+          <form method="POST" class="row">
+            {% csrf_token %}
+            {{form.as_p}}  <!--loading form-->
+            <button type="submit" class="btn btn-secondary btn-block mt-3 mb-4">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock content %}

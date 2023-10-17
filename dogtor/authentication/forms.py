@@ -119,7 +119,7 @@ class CustomUserCreationForm(forms.ModelForm):
                 }),
             'user_name': forms.TextInput(
                 attrs={
-                    'type': 'email',
+                    'type': 'text',
                     'class': 'form-control',
                 }),
             'about': forms.Textarea(
@@ -149,3 +149,35 @@ class CustomUserCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+
+
+class CustomUserEditForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ('user_name', 'first_name', 'email', 'about')
+        widgets = {
+            'email': forms.EmailInput(
+                attrs={
+                    'type': 'email',
+                    'class': 'form-control',
+                }),
+            'first_name': forms.TextInput(
+                attrs={
+                    'type': 'text',
+                    'class': 'form-control',
+                }),
+            'user_name': forms.TextInput(
+                attrs={
+                    'type': 'text',
+                    'class': 'form-control',
+                }),
+            'about': forms.Textarea(
+                attrs={
+                    'type': 'text',
+                    'class': 'form-control',
+                    'rows': '8'
+                }),
+        }
