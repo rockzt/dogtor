@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,12 +6,17 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  {% block title %}
-  <title>Dogtor</title>
+    {% block title %}
+        <title>Dogtor</title>
     {% endblock title %}
+
     {% load bootstrap5 %}
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
 
       <!--Chart js-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
@@ -52,6 +58,13 @@
         setTimeout(()=>{
                 spinnerBox.classList.add('spinner-not-visible')
             }, 100)
+    });
+
+
+    /*Search Box on Select Input Field*/
+     $(document).ready(function () {
+        $('#id_owner').select2();  // Search box on Select Input PetfForm
+        $('#id_pet').select2();  // Search box on Select Input PetDateForm
     });
 </script>
 {{ redirect_to_login_immediately }}
@@ -184,5 +197,7 @@ box-shadow: rgba(255,255,255, 0.75) 1.5em 0 0 0, rgba(255,255,255, 0.75) 1.1em 1
     transform: rotate(360deg);
   }
 }
+
+
 </style>
 </html>

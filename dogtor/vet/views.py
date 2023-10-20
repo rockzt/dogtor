@@ -18,6 +18,8 @@ from vet.models import PetOwner, Pet, PetDate
 from django.db.models import ProtectedError
 from django.shortcuts import render
 import logging   # Use to log actions
+from dal import autocomplete # Required for search box on select field
+from django.apps import apps
 import csv
 from ast import literal_eval
 
@@ -381,6 +383,25 @@ class GenerateCSVView(View):
             writer.writerow([getattr(item, field) for field in header])
 
         return response
+
+
+class GenericModelAutocomplete(autocomplete.Select2QuerySetView):
+
+    def get_queryset(self):
+        # Customize this queryset as needed based on your model and field
+        model_name = self.kwargs['model_name']
+        self.model = apps.get_model(app_label='vet', model_name=model_name)
+        qs = model_name.objects.all()
+
+        if model_name == 'Pet':
+            if self.q:
+                qs = qs.filter(owner__icontains=self.q)
+
+        if model_name == 'PetDate':
+            if self.q:
+                qs = qs.filter(pet__icontains=self.q)
+
+        return qs
 
 
 ''' 

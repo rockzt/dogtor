@@ -41,11 +41,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap5',
+    'dal',  # Required for Search Box on Select Input
+    'dal_select2',  # Required for Search Box on Select Input
     'authentication',
     'vet',
     'blog',
     'rest_framework', # rest framework
-    'api'  # Our api APP
+    'api',  # Our api APP
 ]
 
 MIDDLEWARE = [
@@ -194,7 +196,10 @@ AUTH_USER_MODEL = 'authentication.ModUser'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+# After adding the line  'STATIC_ROOT = os.path.join(BASE_DIR, "static")'  you need to run 'python3 manage.py collectstatic'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

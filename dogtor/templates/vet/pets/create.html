@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+
 {% block title %}
 <title>Pet</title>
 {% endblock title %}
@@ -10,15 +11,6 @@
 
 <!--the context is -> 'owner'-->
 {% block content %}
-<!--<div class="card-body">
-    <h5>Create New Pet</h5>
-    <form method="POST">
-        {% csrf_token %}
-        {{form.as_p}}  loading form
-        <a type="button" class="btn btn-danger" href="{% url 'vet:pets_list' %}">Cancel</a>
-        <button type="submit" class="btn btn-success">Create</button>
-    </form>
-</div>-->
 
 <div class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center">
   <div class="col">
@@ -28,8 +20,8 @@
         <div class="card-text">
           <form method="POST">
             {% csrf_token %}
-            {{form.as_p}}  <!--loading form-->
-            <button type="submit" class="btn btn-success">Create</button>
+            {{form.as_p}}
+            <button type="submit" class="btn btn-success mt-3">Create</button>
           </form>
         </div>
       </div>
@@ -40,3 +32,6 @@
   </div>
 </div>
 {% endblock content %}
+
+{% block scripts %}
+{% endblock scripts %}
