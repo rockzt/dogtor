@@ -31,6 +31,7 @@ urlpatterns = [
     path('api/', include(('api.urls', 'api'))), # API's urls app
 ]
 
+
 # Customizing admin panel (title, header, title tab )
 admin.site.index_title = "Dogtor"
 admin.site.site_header = "Dogtor Admin"

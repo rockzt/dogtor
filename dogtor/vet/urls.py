@@ -17,7 +17,8 @@ from .views import (list_pet_owners,
                     PetdatesDetial,
                     PetdatesCreate,
                     PetsdatesUpdate,
-                    GenerateCSVView
+                    GenerateCSVView,
+                    GenericModelAutocomplete
                     )
 
 # alias (reversed urls) -> app's urls in specific
@@ -46,4 +47,6 @@ urlpatterns = [
     # Simple Views
     path('test', Test.as_view()), # Configuring generic class view, this class does not render template
     path('generate-csv/', GenerateCSVView.as_view(), name='generate_csv'),
+    path('pet-autocomplete/<str:model_name>/', GenericModelAutocomplete.as_view(), name='generic-autocomplete'),
+
 ]

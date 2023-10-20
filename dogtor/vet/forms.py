@@ -1,7 +1,8 @@
 from django import forms
-
 # Importing models
 from .models import PetOwner, Pet, PetDate
+from dal import autocomplete
+
 
 # Link forms with models
 # Forms -> Classes
@@ -48,7 +49,11 @@ class OwnerForm(forms.ModelForm):
 class PetForm(forms.ModelForm):
     class Meta:
         model = Pet
-        fields = ["name", "type", "owner"]
+        fields = ("name", "type", "owner")
+        owner = forms.ModelChoiceField(
+            queryset=Pet.objects.all(),
+            widget=autocomplete.ModelSelect2(url='generic-autocomplete', forward=['model_name']),
+        )
         widgets = {
             'name': forms.TextInput(
                 attrs={
@@ -60,11 +65,12 @@ class PetForm(forms.ModelForm):
                     'type': 'text',
                     'class': 'form-control',
                 }),
-            'owner': forms.Select(
+            'owner': autocomplete.ModelSelect2(
                 attrs={
-                    'class': 'form-control',
                     'type': 'text',
-                }),
+                    'class': 'form-control',
+                }
+            )
         }
 
 
@@ -74,6 +80,10 @@ class PetdateForm(forms.ModelForm):
     class Meta:
         model = PetDate
         fields = ["datetime", "type", "pet"]
+        pet = forms.ModelChoiceField(
+            queryset=PetDate.objects.all(),
+            widget=autocomplete.ModelSelect2(url='generic-autocomplete', forward=['model_name']),
+        )
         widgets = {
             'datetime': forms.DateTimeInput(
                 attrs={
@@ -85,7 +95,7 @@ class PetdateForm(forms.ModelForm):
                     'class': 'form-control',
                     'type': 'text',
                 }),
-            'pet': forms.Select(
+            'pet': autocomplete.ModelSelect2(
                 attrs={
                     'class': 'form-control',
                     'type': 'text',
