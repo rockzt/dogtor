@@ -2,6 +2,9 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm    # Registration Form Front End
 from django.contrib.auth.forms import ReadOnlyPasswordHashField, AuthenticationForm
+# CAPTCHA IMPORTING LINKS
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Invisible
 
 User = get_user_model()
 
@@ -92,6 +95,7 @@ class UserAdminChangeForm(forms.ModelForm):
 
 # User Creation Form - Front End
 class CustomUserCreationForm(forms.ModelForm):
+    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
     password = forms.CharField(widget=forms.PasswordInput(
         attrs={
                 'type': 'password',
@@ -154,7 +158,6 @@ class CustomUserCreationForm(forms.ModelForm):
 
 
 class CustomUserEditForm(forms.ModelForm):
-
     class Meta:
         model = User
         fields = ('user_name', 'first_name', 'email', 'about')

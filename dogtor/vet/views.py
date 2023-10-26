@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.http import JsonResponse
+from django.contrib import messages
 from django.template import loader
 from django.http import HttpResponse
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin  # Importing permissions for views and login required
@@ -83,6 +85,8 @@ class OwnersList(LoginRequiredMixin ,ListView, PermissionRequiredMixin):
         if search_query:
             logger.info(f"Term Searched -> {search_query}")
             queryset = queryset.filter(first_name__icontains=search_query)
+            if not queryset:
+                messages.warning(self.request, 'No Owners Found!.')
         else:
             logger.warning(f"Empty Term Search")
         return queryset
@@ -121,6 +125,8 @@ class PetsList(LoginRequiredMixin ,ListView):
         if search_query:
             logger.info(f"Term Searched -> {search_query}")
             queryset = queryset.filter(name__icontains=search_query)
+            if not queryset:
+                messages.warning(self.request, 'No Pets Found!.')
         else:
             logger.warning(f"Empty Term Search")
 
@@ -146,7 +152,7 @@ class PetdatesList(LoginRequiredMixin, ListView):
     template_name = "vet/petdates/list.html"
     context_object_name = "petdates"
     paginate_by = 6
-    ordering = '-created_at'
+    ordering = '-datetime'
 
 
     def get_queryset(self):
@@ -156,6 +162,8 @@ class PetdatesList(LoginRequiredMixin, ListView):
         if search_query:
             logger.info(f"Term Searched -> {search_query}")
             queryset = queryset.filter(pet__name__icontains=search_query)
+            if not queryset:
+                messages.warning(self.request, 'No Appointments Found!.')
         else:
             logger.warning(f"Empty Term Search")
 
@@ -226,6 +234,14 @@ class OwnersCreate(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('vet:owners_list') # 4
 
 
+    def form_valid(self, form_class):
+        messages.success(self.request, 'User Created successfully.')
+        return super().form_valid(form_class)
+
+
+
+
+
 class OwnersUpdate(LoginRequiredMixin, PermissionRequiredMixin ,UpdateView):
     """View used to update a PetOwner"""
     # Permission required to access this view
@@ -242,6 +258,12 @@ class OwnersUpdate(LoginRequiredMixin, PermissionRequiredMixin ,UpdateView):
     success_url = reverse_lazy('vet:owners_list')  # 4
 
 
+    def form_valid(self, form_class):
+        messages.success(self.request, 'User Info Updated successfully.')
+        return super().form_valid(form_class)
+
+
+
 class PetsCreate(LoginRequiredMixin, CreateView):
     """View used to create Pet"""
     permission_required = "vet.add_pet"  # app.how is it named on admin in the group section on permission assigned, just the user with this permission can access to this view
@@ -254,6 +276,10 @@ class PetsCreate(LoginRequiredMixin, CreateView):
     form_class = PetForm # 3
 
     success_url = reverse_lazy('vet:pets_list') # 4
+
+    def form_valid(self, form_class):
+        messages.success(self.request, 'Pet Created successfully.')
+        return super().form_valid(form_class)
 
 
 class PetsUpdate(LoginRequiredMixin, UpdateView):
@@ -269,6 +295,10 @@ class PetsUpdate(LoginRequiredMixin, UpdateView):
     form_class = PetForm # If you want to update specific fields, you can create another form  in forms.py with specific fields
 
     success_url = reverse_lazy('vet:pets_list')  # 4
+
+    def form_valid(self, form_class):
+        messages.success(self.request, 'Pet Info Updated successfully.')
+        return super().form_valid(form_class)
 
 
 class PetdatesCreate(LoginRequiredMixin, CreateView):
@@ -288,6 +318,11 @@ class PetdatesCreate(LoginRequiredMixin, CreateView):
 
     success_url = reverse_lazy('vet:petdates_list') # 4
 
+    def form_valid(self, form_class):
+        messages.success(self.request, 'Appointment created successfully.')
+        return super().form_valid(form_class)
+
+
 
 class PetsdatesUpdate(LoginRequiredMixin, UpdateView):
     """View used to update a PetOwner"""
@@ -301,6 +336,10 @@ class PetsdatesUpdate(LoginRequiredMixin, UpdateView):
     form_class = PetdateForm # If you want to update specific fields, you can create another form  in forms.py with specific fields
 
     success_url = reverse_lazy('vet:petdates_list')  # 4
+
+    def form_valid(self, form_class):
+        messages.success(self.request, 'Appointment Info Updated successfully.')
+        return super().form_valid(form_class)
 
 
 
@@ -322,8 +361,10 @@ class OwnersDelete(LoginRequiredMixin, DeleteView):
             return super().delete(request, *args, **kwargs)
         except ProtectedError as e:
             # Customize the error message
+            messages.warning(self.request, 'Cannot delete Owner.!!')
             error_message = f"Cannot delete owner, has at least one pet related. ({e})"
             return render(request, 'vet/owners/delete.html', {'error_message': error_message})
+
 
 
 class PetsDelete(LoginRequiredMixin, DeleteView):
@@ -345,6 +386,7 @@ class PetsDelete(LoginRequiredMixin, DeleteView):
             return super().delete(request, *args, **kwargs)
         except ProtectedError as e:
             # Customize the error message
+            messages.warning(self.request, 'Cannot delete Pet.!!')
             error_message = f"Cannot delete pet, has at least one related Appointment -> ({e})"
             return render(request, 'vet/pets/delete.html', {'error_message': error_message})
 
@@ -356,6 +398,14 @@ class Test(View):
     # Como función el método(GET,PATCH,POST.DELETE,PUT)
     def get(self, request):
         return HttpResponse("Hello there, from generic class view!!!")
+
+
+class GetAllDatesPetdates(View):
+        def get(self, request):
+            dates = PetDate.objects.all().values('id', 'type', 'datetime')  # Replace 'datetime' with the field name
+            events = [{'title': date['type'], 'start': date['datetime'].strftime("%Y-%m-%d %H:%M:%S"), 'color': 'green', 'url': f"petdates/{date['id']}/edit"} for date in dates]
+            return JsonResponse(events, safe=False)
+
 
 
 class GenerateCSVView(View):
@@ -431,9 +481,12 @@ class Home(TemplateView):
             context["owners_count"] = 0
 
         try:
-            context["pet_date_count"] = PetDate.objects.count()
+            context["pet_date_count"] = PetDate.objects.filter(datetime__year='2023').count()
+            pet_date_list = PetDate.objects.all()
+            context["pet_date_list"] = [ pet_date_list.datetime.strftime('%Y-%m-%d') for pet_date_list in pet_date_list]
         except PetDate.DoesNotExist:
             context["pet_date_count"] = 0
+            context["pet_date_list"] = 0
 
         try:
             context["pet_last_created"] = Pet.objects.last()

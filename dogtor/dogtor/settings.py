@@ -10,9 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+
+from django.contrib.messages import constants as messages
 from pathlib import Path
 import os
-
+from dotenv import load_dotenv
+load_dotenv() # Importing .env file
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -44,6 +47,7 @@ INSTALLED_APPS = [
     'dal',  # Required for Search Box on Select Input
     'dal_select2',  # Required for Search Box on Select Input
     'authentication',
+    'captcha',
     'vet',
     'blog',
     'rest_framework', # rest framework
@@ -90,10 +94,10 @@ WSGI_APPLICATION = 'dogtor.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "dogtor",
+        "NAME": os.getenv("BD_NAME"),
         #"USER": "postgres",
         #"PASSWORD": "postgres",
-        "HOST": "localhost",
+        "HOST": os.getenv("BD_HOST"),
         "PORT": "5432",
     }
 }
@@ -207,9 +211,27 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # EMAIL SENDER CONFIGURATION
+'''
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'xabc6457@gmail.com'#sender's email-id
-EMAIL_HOST_PASSWORD = 'xyz123abc@' #password associated with above email-id
+EMAIL_HOST = 'smtp-mail.outlook.com'  # Hotmail SMTP server
+EMAIL_PORT = 587  # Port for TLS
+EMAIL_HOST_USER = ''  # Your Hotmail email address
+EMAIL_HOST_PASSWORD = ''  # Your Hotmail password
+DEFAULT_FROM_EMAIL = ''
+'''
+
+# CAPTCHA CONFIGURATION
+RECAPTCHA_PUBLIC_KEY = os.getenv("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = os.getenv("RECAPTCHA_PRIVATE_KEY")
+RECAPTCHA_DOMAIN = os.getenv("RECAPTCHA_DOMAIN")
+SILENCED_SYSTEM_CHECKS = os.getenv("SILENCED_SYSTEM_CHECKS")
+
+# MESSAGES NOTIFICATIONS
+MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-secondary',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',
+ }
