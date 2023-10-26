@@ -116,12 +116,12 @@
             a.download = 'your_data.csv';  // Set the desired file name
             document.body.appendChild(a);
             a.click();
-
             // Clean up resources
             window.URL.revokeObjectURL(url);
         })
         .catch(error => {
             console.error('Error:', error);
+            alert.error('Error Downloading CSV:', error)
         });
     });
 });

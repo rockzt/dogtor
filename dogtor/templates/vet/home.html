@@ -4,7 +4,6 @@
 {% block title %}
 <title>Home</title>
 {% endblock title %}
-
 {% block header %}
 <h1>General View</h1>
 {% endblock header %}
@@ -16,7 +15,7 @@
     </div>
  </div>
 
-  <div class="col-12 mb-3 text-start">
+  <div class="col-12 mt-5 mb-3 text-start">
     <h3>Last Records Created</h3>
   </div>
   <div class="col-4 text-center">
@@ -35,6 +34,20 @@
     </div>
   </div>
 </div>
+
+
+
+
+<div class="container-fluid mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-9">
+            <div id="calendar"></div>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="row justify-content-center">
 
 <div class="row col-xs-12 col-md-7 text-center justify-content-center">
@@ -45,7 +58,7 @@
   <div class="col-sm-12  mt-2">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Appointments</h5>
+        <h5 class="card-title">Appointments <small>(Current Year)</small></h5>
         <p class="card-text">Quantity: <span class="badge bg-secondary">{{ pet_date_count }}</span></p>
         <a href="/vet/petdates" class="btn btn-danger">Go Appointments</a>
       </div>
@@ -54,7 +67,7 @@
   <div class="col-sm-12  mt-2">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Owners</h5>
+        <h5 class="card-title">Owners <small>(All)</small></h5>
         <p class="card-text">Quantity: <span class="badge bg-secondary">{{ owners_count }}</span></p>
         <a href="/vet/owners" class="btn btn-warning">Go Owners</a>
       </div>
@@ -63,7 +76,7 @@
   <div class="col-sm-12  mt-2">
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Pets</h5>
+        <h5 class="card-title">Pets <small>(All)</small></h5>
         <p class="card-text">Quantity: <span class="badge bg-secondary">{{ pets_count }}</span></p>
         <a href="/vet/pets" class="btn btn-primary">Go Pets</a>
       </div>
@@ -71,12 +84,20 @@
   </div>
 </div>
 </div>
+
+<div class="row mt-5 mb-2">
+    <div class="col-12 text-start">
+        <h3>Calendar Appointments Count</h3>
+    </div>
+    <div id='myCalendar'></div>
+</div>
 {% endblock content %}
 
 {% block scripts %}
 <script>
-// Chart loading data and colors
+
 document. addEventListener("DOMContentLoaded", function(){
+    // Chart loading data and colors
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'doughnut',
@@ -111,8 +132,8 @@ document. addEventListener("DOMContentLoaded", function(){
                     }
                 }
             }
+        });
 });
-    });
 
 
 /*Clock Functionality*/
@@ -140,6 +161,182 @@ function digitalclock(){
  }
 digitalclock();
 setInterval(digitalclock,1000);
+
+/*Calendar GitHub Style*/
+function calendarDisplay(){
+    currentYear = new Date().getFullYear()
+    const dateCountList = [];
+    const dateCounts = {};
+    var date_list = []
+    i = 0;
+        // Looping through context variable passed by view and store on JS variable
+        {% for pet_date_item in  pet_date_list   %}
+        date_list[i] = '{{pet_date_item}}'
+        i += 1;
+        {%   endfor   %}
+
+    date_list.forEach((date) => {
+        if (dateCounts[date]) {
+            // If the date is already a key, increment the count
+            dateCounts[date]++;
+        } else {
+            // If the date is not a key, initialize the count to 1
+            dateCounts[date] = 1;
+    }
+    });
+
+    // Convert the dateCounts object into an array of date-count pairs
+    for (const date in dateCounts) {
+        dateCountList.push([date, dateCounts[date]]);
+    }
+var myConfig = {
+  type: 'calendar',
+  options: {
+    year: {
+      text: currentYear,
+      visible: false
+    },
+    startMonth: 1,
+    endMonth: 12,
+    palette: ['none', '#2196F3'],
+    month: {
+      item: {
+        fontColor: 'gray',
+        fontSize: 18
+      }
+    },
+    weekday: {
+      values: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      item: {
+        fontColor: 'gray',
+        fontSize: 14
+      }
+    },
+      // values : [ ['2023-09-10', 1],   ]
+    values: dateCountList
+  },
+  labels: [{ //Lefthand Label (container portion)
+      borderColor: 'gray',
+      borderWidth: 1,
+      x: '8%',
+      y: '60%',
+      width: '40%',
+      height: '30%'
+    },
+    { //Lefthand Label (top portion)
+      text: 'Daily Appoinments',
+      fontColor: '#212121',
+      textAlign: 'center',
+      x: '10%',
+      y: '65%',
+      width: '36%'
+    },
+    { //Lefthand Label (middle portion)
+      text: '%plot-value',
+      fontColor: '#2196F3',
+      fontFamily: 'Georgia',
+      fontSize: 35,
+      textAlign: 'center',
+      x: '10%',
+      y: '68%',
+      width: '36%'
+    },
+    // Note: the bottom portion of the Bottom-Left Label is the fixed tooltip, below.
+
+    { //Rightside Label (container portion)
+      borderColor: 'gray',
+      borderWidth: 1,
+      x: '52%',
+      y: '60%',
+      width: '40%',
+      height: '30%',
+    },
+    { //Rightside Label (top portion)
+      text: 'Total Appointments',
+      fontColor: '#212121',
+      textAlign: 'center',
+      x: '54%',
+      y: '65%',
+      width: '36%'
+    },
+    { //Rightside Label (middle portion)
+      text: '{{ pet_date_count }}',
+      fontColor: '#2196F3',
+      fontFamily: 'Georgia',
+      fontSize: 35,
+      textAlign: 'center',
+      x: '54%',
+      y: '68%',
+      width: '36%'
+    },
+    { //Rightside Label (bottom portion)
+      text: 'Jan 1 - Current',
+      fontColor: '#212121',
+      padding: 2,
+      textAlign: 'center',
+      x: '54%',
+      y: '80%',
+      width: '36%'
+    }
+  ],
+
+  tooltip: { //Lefthand Label (bottom portion)
+    text: '%data-day',
+    backgroundColor: 'none',
+    borderColor: 'none',
+    fontColor: '#212121',
+    padding: 2,
+    //textAlign: 'center',
+    align: 'center',
+    sticky: true,
+    timeout: 30000,
+    x: '10%',
+    y: '80%',
+    width: '36%'
+  },
+
+  plotarea: {
+    marginTop: '15%',
+    marginBottom: '55%',
+    marginLeft: '8%',
+    marginRight: '8%'
+  }
+};
+
+zingchart.loadModules('calendar', function() {
+  zingchart.render({
+    id: 'myCalendar',
+    data: myConfig,
+    height: 600,
+    width: '100%'
+  });
+});
+}
+calendarDisplay();
+
+
+/*Calendar Appointments Overview*/
+document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            events: '/vet/get-all-dates-petdates/',
+            eventClick: function(info) {
+                info.jsEvent.preventDefault(); // don't let the browser navigate
+                    if (info.event.url) {
+                        window.open(info.event.url);
+                    }
+                },
+            eventTimeFormat: { // like '14:30:00'
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+          }
+        });
+        calendar.render();
+      });
+
+
 </script>
 {% endblock scripts %}
 
